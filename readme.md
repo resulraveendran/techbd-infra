@@ -32,7 +32,7 @@ infrastructure-prime/
 │
 ├── oracle/              # Oracle Cloud infrastructure
 │   ├── <whatever other deployments>/  # General Oracle Cloud deployments
-│   └── virtualbox/      # VirtualBox environments managed on Oracle Cloud
+│   └── virtualbox/      # VirtualBox environments managed in any local or hosted VMs
 │       └── sandbox/     # Sandbox environment for VirtualBox setups
 ```
 
