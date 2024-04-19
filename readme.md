@@ -1,11 +1,10 @@
+# TechBD Infrastructure as Code (IaC) Home
 
-# Infrastructure-Prime
-
-Welcome to the **Infrastructure-Prime** repository, the monolithic repository (monorepo) for all infrastructure as code (IaC) deployments for **Technology By Design** (TechBD). This repository is dedicated to managing and orchestrating the infrastructure setup across various platforms including Docker, AWS, Azure, and Oracle. Our goal is to streamline development processes and ensure consistency across all environments.
+Welcome to the Technology By Design (TechBD) Infrastructure as Code (IaC) repository. _Infrastructure Prime_ is the monolithic repository (monorepo) for all IaC deployments. This repository is dedicated to managing and orchestrating the infrastructure setup across various platforms including Docker, AWS, Azure, and Oracle. Our goal is to streamline development processes and ensure consistency across all environments.
 
 ## Purpose
 
-The `infrastructure-prime` repository serves as the central hub for TechBD's infrastructure coding efforts. By using this monorepo structure, we aim to:
+The TechBD IaC repository serves as the central hub for TechBD's infrastructure coding efforts. By using this monorepo structure, we aim to:
 
 - **Centralize Management**: Single repository for all infrastructure configurations makes it easier to manage permissions, dependencies, and updates.
 - **Improve Collaboration**: Teams can work together more effectively with shared contexts and easier code reviews.
@@ -47,7 +46,7 @@ infrastructure-prime/
 
 ## Getting Started
 
-To get started with using or contributing to the `infrastructure-prime` repository, please ensure you have the following prerequisites:
+To get started with using or contributing to the TechBD IaC repository, please ensure you have the following prerequisites:
 
 1. Access to the TechBD GitHub account.
 2. Proper setup of necessary tools and access credentials for Docker, AWS, Azure, and Oracle Cloud.
@@ -60,7 +59,7 @@ git clone https://github.com/TechBD/infrastructure-prime.git
 
 ## Contribution Guidelines
 
-Contributions to the `infrastructure-prime` repo are welcome! Please follow our contribution guidelines:
+Contributions to the TechBD IaC repo are welcome! Please follow our contribution guidelines:
 
 - **Code Reviews**: All commits should be made via pull requests and reviewed by at least one other team member.
 - **Style Guide**: Adhere to the coding styles and guidelines provided in the `docs/` directory.
