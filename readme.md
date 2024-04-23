@@ -24,7 +24,11 @@ infrastructure-prime/
 │   └── sandbox/         # Sandbox environment for Docker-based experiments
 │
 ├── aws/                 # AWS (Amazon Web Services) infrastructure
+│   ├── common/  # Reusable AWS components for techbd
 │   ├── synthetic.sftp.techbd.org/  # SFTP server setup on AWS
+│   ├── synthetic.sftp.qualifiedentity.org/  # SFTP server setup on AWS
+│   ├── synthetic.api.techbd.org/  # HTTP server setup on AWS
+│   ├── synthetic.fhir.techbd.org/  # FHIR server setup on AWS
 │   └── <whatever other deployments>/  # Other AWS-based deployments using CDK
 │
 ├── azure/               # Microsoft Azure infrastructure
