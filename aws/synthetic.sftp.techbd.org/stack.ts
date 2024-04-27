@@ -11,7 +11,7 @@ import * as dotenv from "dotenv";
 import path = require("path");
 
 
-export interface SynSftpTBDProps extends cdk.StackProps {}
+export interface SynSftpTBDProps extends cdk.StackProps { }
 
 export class SynSftpTBD extends cdk.Stack {
   readonly instance: ec2.Instance;
@@ -114,6 +114,9 @@ export class SynSftpTBD extends cdk.Stack {
         buildArgs: {
           REPO_URL: process.env.REPO_URL || "",
           TAG: process.env.TAG || "",
+          ORCHCTL_CRON: process.env.ORCHCTL_CRON || "",
+          FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
+
         },
         platform: ecrAssets.Platform.LINUX_AMD64,
       }
@@ -215,9 +218,9 @@ export class SynSftpTBD extends cdk.Stack {
       platform: ecrAssets.Platform.LINUX_AMD64,
       buildArgs: {
         TAG: process.env.TAG || "",
-        QE_NAMES:
-          "bronx healtheconn grrhio healthix healthelink hixny qcs-test-load qcs-test-engr partner1-test partner2-test observe",
-        INTERVAL: "120",
+        QE_NAMES: process.env.QE_NAMES || "",
+        INTERVAL: process.env.INTERVAL || "",
+        ORCHCTL_CRON: process.env.ORCHCTL_CRON || "",
         DATE: new Date().toISOString(),
       },
     });

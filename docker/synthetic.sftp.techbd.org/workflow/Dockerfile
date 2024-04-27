@@ -13,7 +13,7 @@ RUN curl -fsSL https://deno.land/x/install/install.sh | DENO_VERSION=1.41.0 sh
 ENV PATH="/root/.deno/bin:$PATH"
 
 # Install DuckDB
-RUN wget -qO- https://github.com/duckdb/duckdb/releases/download/v0.9.2/duckdb_cli-linux-amd64.zip >duckdb.zip
+RUN wget -qO- https://github.com/duckdb/duckdb/releases/download/v0.10.2/duckdb_cli-linux-amd64.zip >duckdb.zip
 RUN unzip duckdb.zip -d /usr/local/bin/
 RUN chmod +x /usr/local/bin/duckdb
 RUN export PATH=$PATH:/usr/local/bin
@@ -28,13 +28,25 @@ RUN git clone --depth 1 --branch ${TAG} ${REPO_URL}
 # Run a Deno script from the cloned repo and store its output in a log file
 RUN deno run -A ./1115-hub/support/bin/doctor.ts >/doctor_log.txt
 
-# Define system PATH in crontab and setup cron jobs
-COPY crontab /etc/cron.d/1115-hub
-RUN echo "PATH=/usr/local/bin:/usr/bin:/bin" >>/etc/cron.d/1115-hub
-RUN chmod 0644 /etc/cron.d/1115-hub
-RUN crontab /etc/cron.d/1115-hub
-
 EXPOSE 8082
+
+ARG QE_NAMES
+ARG TAG
+ARG DATE
+ARG INTERVAL
+ARG ORCHCTL_CRON
+ARG FHIR_ENDPOINT
+
+ENV QE_NAMES=${QE_NAMES}
+ENV TAG=${TAG}
+ENV DATE=${DATE}
+ENV INTERVAL=${INTERVAL}
+ENV ORCHCTL_CRON=${ORCHCTL_CRON}
+ENV FHIR_ENDPOINT=${FHIR_ENDPOINT}
+
+# Add the cron job script
+COPY create-crontab.sh /create-crontab.sh
+RUN chmod +x /create-crontab.sh
 
 # Add the health check script
 COPY health-check.sh /health-check.sh

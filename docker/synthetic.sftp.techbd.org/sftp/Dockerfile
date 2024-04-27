@@ -1,14 +1,15 @@
 # Use the atmoz/sftp image as the base
 FROM atmoz/sftp
+
 ARG QE_NAMES
 ARG TAG
 ARG DATE 
-ARG INTERVAL
+ARG ORCHCTL_CRON
 
 ENV QE_NAMES=${QE_NAMES}
 ENV TAG=${TAG}
 ENV DATE=${DATE}
-ENV INTERVAL=${INTERVAL}
+ENV ORCHCTL_CRON=${ORCHCTL_CRON}
 
 
 # Install netcat for health checking purposes

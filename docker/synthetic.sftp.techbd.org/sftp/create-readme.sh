@@ -1,9 +1,9 @@
 #!/bin/bash
-echo "Debug: QE_NAMES='$QE_NAMES', TAG='$TAG', DATE='$DATE', INTERVAL='$INTERVAL'"
+echo "Debug: QE_NAMES='$QE_NAMES', TAG='$TAG', DATE='$DATE', ORCHCTL_CRON='$ORCHCTL_CRON'"
 
-# Ensure that QE_NAMES, version, date, and interval_seconds variables are provided
-if [[ -z "$QE_NAMES" || -z "$TAG" || -z "$DATE" || -z "$INTERVAL" ]]; then
-    echo "Environment variables QE_NAMES, TAG, DATE, and INTERVAL must be set."
+# Ensure that QE_NAMES, version, date, and ORCHCTL_CRON variables are provided
+if [[ -z "$QE_NAMES" || -z "$TAG" || -z "$DATE" || -z "$ORCHCTL_CRON" ]]; then
+    echo "Environment variables QE_NAMES, TAG, DATE, and ORCHCTL_CRON must be set."
     exit 1
 fi
 
@@ -19,7 +19,7 @@ for qe_name in "${qe_names_array[@]}"; do
     rm -rf "$output_dir/ingress"
     
     # Process the template and replace variables
-    sed "s/\${QE_NAME}/$qe_name/g; s/\${TAG}/$TAG/g; s/\${DATE}/$DATE/g; s/\${INTERVAL}/$INTERVAL/g" /README-template.md > "$output_dir/README.md"
+    sed "s/\${QE_NAME}/$qe_name/g; s/\${TAG}/$TAG/g; s/\${DATE}/$DATE/g; s/\${ORCHCTL_CRON}/$ORCHCTL_CRON/g" /README-template.md > "$output_dir/README.md"
 done
 
 echo "README files have been created."
