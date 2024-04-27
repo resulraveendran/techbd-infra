@@ -23,6 +23,11 @@ jobs:
           role-session-name: GithubActions
           aws-region: ${{env.AWS_REGION}}
           audience: sts.amazonaws.com.
+          
+      - name: Create required symbolic links
+        run: |
+          sudo ln -s ${{ github.workspace }}/docker/synthetic.sftp.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.sftp.qualifiedentity.org/containers
+          sudo ln -s ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
       
       - name: install/configure cdk
         run: |
