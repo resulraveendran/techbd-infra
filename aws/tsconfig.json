@@ -13,6 +13,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "noUnusedLocals": false,
+    "preserveSymlinks": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": false,
