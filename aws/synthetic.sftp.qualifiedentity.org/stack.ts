@@ -7,14 +7,14 @@ import * as ecrAssets from "aws-cdk-lib/aws-ecr-assets";
 import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
-import { App } from "aws-cdk-lib";
 
-export interface ComputeStackProps extends cdk.StackProps {}
 
-export class ComputeStack extends cdk.Stack {
+export interface SynSftpQEProps extends cdk.StackProps {}
+
+export class SynSftpQE extends cdk.Stack {
   readonly instance: ec2.Instance;
 
-  constructor(scope: Construct, id: string, props: ComputeStackProps) {
+  constructor(scope: Construct, id: string, props: SynSftpQEProps) {
     super(scope, id, props);
     //
     //

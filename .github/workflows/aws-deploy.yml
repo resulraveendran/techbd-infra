@@ -1,0 +1,43 @@
+name: synthetic-sftp-techbd-org deployment
+
+on:
+  push:
+    paths:
+      - 'aws/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-session-name: GithubActions
+          aws-region: "us-east-1" # if we purchase the elevated gh plan, we can use environments for this
+      
+      - name: install/configure cdk
+        run: |
+          npm install -g aws-cdk 
+
+      - name: check changes to infrastructure
+        run: |
+          cd aws
+          npm install
+          cdk bootstrap
+          cdk diff
+      
+      - name: deploy infrastructure
+        run: |
+          cd aws
+          npm install
+          cdk deploy --all --outputs-file output.json --require-approval never
+
+      - name: Upload cdk output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cdk-output-artifact
+          path: ./output.json
+          retention-days: 14
+
