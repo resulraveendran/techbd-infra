@@ -24,7 +24,7 @@ export class SynSftpTBD extends cdk.Stack {
     //
     //
     // Load environment variables from .env file
-    dotenv.config();
+    dotenv.config({ path: path.join(__dirname, ".env") });
 
     // create the VPC
     const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
