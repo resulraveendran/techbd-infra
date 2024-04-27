@@ -7,6 +7,8 @@ import * as ecrAssets from "aws-cdk-lib/aws-ecr-assets";
 import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
+import * as dotenv from "dotenv";
+import path = require("path");
 
 
 export interface SynSftpTBDProps extends cdk.StackProps {}
@@ -21,6 +23,8 @@ export class SynSftpTBD extends cdk.Stack {
     // Shared Services
     //
     //
+    // Load environment variables from .env file
+    dotenv.config();
 
     // create the VPC
     const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
