@@ -10,6 +10,11 @@ fi
 # Iterate over the QE_NAMES, treating it as a space-separated list
 IFS=' ' read -r -a qe_names_array <<< "$QE_NAMES"
 
+# check if ORCHCTL_CRON has a slash in it, format in a way that is friendly to sed
+if [[ "$ORCHCTL_CRON" == *"/"* ]]; then
+    ORCHCTL_CRON=$(echo "$ORCHCTL_CRON" | sed 's/\//\\\//g')
+fi
+
 for qe_name in "${qe_names_array[@]}"; do
     # Define the output directory and create it if it doesn't exist
     output_dir="/home/$qe_name"
