@@ -1,14 +1,19 @@
 #!/bin/bash
-echo "Debug: QE_NAMES='$QE_NAMES', TAG='$TAG', DATE='$DATE', INTERVAL='$INTERVAL'"
+echo "Debug: QE_NAMES='$QE_NAMES', TAG='$TAG', DATE='$DATE', ORCHCTL_CRON='$ORCHCTL_CRON'"
 
-# Ensure that QE_NAMES, version, date, and interval_seconds variables are provided
-if [[ -z "$QE_NAMES" || -z "$TAG" || -z "$DATE" || -z "$INTERVAL" ]]; then
-    echo "Environment variables QE_NAMES, TAG, DATE, and INTERVAL must be set."
+# Ensure that QE_NAMES, version, date, and ORCHCTL_CRON variables are provided
+if [[ -z "$QE_NAMES" || -z "$TAG" || -z "$DATE" || -z "$ORCHCTL_CRON" ]]; then
+    echo "Environment variables QE_NAMES, TAG, DATE, and ORCHCTL_CRON must be set."
     exit 1
 fi
 
 # Iterate over the QE_NAMES, treating it as a space-separated list
 IFS=' ' read -r -a qe_names_array <<< "$QE_NAMES"
+
+# check if ORCHCTL_CRON has a slash in it, format in a way that is friendly to sed
+if [[ "$ORCHCTL_CRON" == *"/"* ]]; then
+    ORCHCTL_CRON=$(echo "$ORCHCTL_CRON" | sed 's/\//\\\//g')
+fi
 
 for qe_name in "${qe_names_array[@]}"; do
     # Define the output directory and create it if it doesn't exist
@@ -19,7 +24,7 @@ for qe_name in "${qe_names_array[@]}"; do
     rm -rf "$output_dir/ingress"
     
     # Process the template and replace variables
-    sed "s/\${QE_NAME}/$qe_name/g; s/\${TAG}/$TAG/g; s/\${DATE}/$DATE/g; s/\${INTERVAL}/$INTERVAL/g" /README-template.md > "$output_dir/README.md"
+    sed "s/\${QE_NAME}/$qe_name/g; s/\${TAG}/$TAG/g; s/\${DATE}/$DATE/g; s/\${ORCHCTL_CRON}/$ORCHCTL_CRON/g" /README-template.md > "$output_dir/README.md"
 done
 
 echo "README files have been created."

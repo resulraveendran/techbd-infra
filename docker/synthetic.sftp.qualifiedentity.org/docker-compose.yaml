@@ -10,6 +10,7 @@ services:
         TAG: ${TAG}
         DATE: ${DATE}
         INTERVAL: ${INTERVAL}
+        ORCHCTL_CRON: ${ORCHCTL_CRON}
     volumes:
       - ${MNT_DIR}/sftp-data:/home
     ports:
@@ -28,8 +29,12 @@ services:
       context: ./workflow/
       dockerfile: Dockerfile
       args:
-        - REPO_URL=${REPO_URL}
-        - TAG=${TAG}
+        REPO_URL: ${REPO_URL}
+        QE_NAMES: ${QE_NAMES}
+        TAG: ${TAG}
+        DATE: ${DATE}
+        ORCHCTL_CRON: ${ORCHCTL_CRON}
+        FHIR_ENDPOINT: ${FHIR_ENDPOINT}
     volumes:
       - ${MNT_DIR}/sftp-data:/SFTP
     ports:
@@ -45,14 +50,4 @@ services:
       - database_url=postgresql://qe:qe@postgres:5432/qe
     depends_on:
       - postgres
-  qe-sqlpage:
-    image: lovasoa/sqlpage
-    volumes:
-      - ${MNT_DIR}/sftp-data/:/SFTP
-    ports:
-      - "8084:8084"
-    environment:
-      - database_url=sqlite://SFTP/${SQL_PAGE_QE}/egress/content.sqlite.db?mode=rwc
-    depends_on:
-      - sftp
-      - workflow
+ 
