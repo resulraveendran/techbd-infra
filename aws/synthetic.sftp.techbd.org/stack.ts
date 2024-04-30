@@ -14,8 +14,6 @@ import path = require("path");
 export interface SynSftpTBDProps extends cdk.StackProps { }
 
 export class SynSftpTBD extends cdk.Stack {
-  readonly instance: ec2.Instance;
-
   constructor(scope: Construct, id: string, props: SynSftpTBDProps) {
     super(scope, id, props);
     //
@@ -25,7 +23,14 @@ export class SynSftpTBD extends cdk.Stack {
     //
     // Load environment variables from .env file
     dotenv.config({ path: path.join(__dirname, ".env") });
-
+    const containerBuildArgs = {
+      REPO_URL: process.env.REPO_URL || "",
+      TAG: process.env.TAG || "",
+      QE_NAMES: process.env.QE_NAMES || "",
+      DATE: new Date().toISOString(),
+      ORCHCTL_CRON: process.env.ORCHCTL_CRON || "0 * * * *",
+      FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
+    }
     // create the VPC
     const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
 
@@ -111,13 +116,7 @@ export class SynSftpTBD extends cdk.Stack {
       {
         directory: "./synthetic.sftp.techbd.org/containers/workflow/", // Adjust this to the path of your Docker context
         file: "Dockerfile", // Specify the Dockerfile name
-        buildArgs: {
-          REPO_URL: process.env.REPO_URL || "",
-          TAG: process.env.TAG || "",
-          ORCHCTL_CRON: process.env.ORCHCTL_CRON || "",
-          FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
-
-        },
+        buildArgs: containerBuildArgs,
         platform: ecrAssets.Platform.LINUX_AMD64,
       }
     );
@@ -216,13 +215,7 @@ export class SynSftpTBD extends cdk.Stack {
       directory: "./synthetic.sftp.techbd.org/containers/sftp/", // Adjust this to the path of your Docker context
       file: "Dockerfile", // Specify the Dockerfile name
       platform: ecrAssets.Platform.LINUX_AMD64,
-      buildArgs: {
-        TAG: process.env.TAG || "",
-        QE_NAMES: process.env.QE_NAMES || "",
-        INTERVAL: process.env.INTERVAL || "",
-        ORCHCTL_CRON: process.env.ORCHCTL_CRON || "",
-        DATE: new Date().toISOString(),
-      },
+      buildArgs: containerBuildArgs,
     });
 
     const sftpService = new ecsPatterns.NetworkLoadBalancedFargateService(
