@@ -1,4 +1,3 @@
-\
 #!/bin/bash
 echo "Debug: QE_NAMES='$QE_NAMES', ORCHCTL_CRON='$ORCHCTL_CRON', FHIR_ENDPOINT='$FHIR_ENDPOINT'"
 
