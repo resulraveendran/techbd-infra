@@ -1,4 +1,4 @@
-name: synthetic-sftp-qualifiedentity-org deployment
+name: synthetic-sftp-techbd-org deployment
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
         run: |
           cd aws
           npm install
-          cdk deploy --synthetic-sftp-techbd-org --outputs-file output.json --require-approval never
+          cdk deploy *-techbd-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact
         uses: actions/upload-artifact@v3

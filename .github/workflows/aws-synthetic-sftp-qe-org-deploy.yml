@@ -46,7 +46,7 @@ jobs:
         run: |
           cd aws
           npm install
-          cdk deploy --synthetic-sftp-qualifiedentity-org --outputs-file output.json --require-approval never
+          cdk deploy *-qualifiedentity-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact
         uses: actions/upload-artifact@v3
