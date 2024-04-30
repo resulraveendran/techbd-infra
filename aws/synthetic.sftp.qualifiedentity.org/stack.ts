@@ -116,7 +116,7 @@ export class SynSftpQE extends cdk.Stack {
       this,
       "workflowImage",
       {
-        directory: "./synthetic.sftp.techbd.org/containers/workflow/", // Adjust this to the path of your Docker context
+        directory: "./synthetic.sftp.qualifiedentity.org/containers/workflow/", // Adjust this to the path of your Docker context
         file: "Dockerfile", // Specify the Dockerfile name
         buildArgs: containerBuildArgs,
         platform: ecrAssets.Platform.LINUX_AMD64,
@@ -214,7 +214,7 @@ export class SynSftpQE extends cdk.Stack {
 
     // create a load-balanced Fargate service for the sftp container
     const sftpDockerImage = new ecrAssets.DockerImageAsset(this, "sftpImage", {
-      directory: "./synthetic.sftp.techbd.org/containers/sftp/", // Adjust this to the path of your Docker context
+      directory: "./synthetic.sftp.qualifiedentity.org/containers/sftp/", // Adjust this to the path of your Docker context
       file: "Dockerfile", // Specify the Dockerfile name
       platform: ecrAssets.Platform.LINUX_AMD64,
       buildArgs: containerBuildArgs,
