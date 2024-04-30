@@ -44,7 +44,7 @@ jobs:
           cd aws
           npm install
           cdk bootstrap
-          cdk diff
+          cdk diff *-qualifiedentity-org
       
       - name: deploy infrastructure
         run: |
