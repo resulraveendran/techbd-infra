@@ -22,7 +22,10 @@ for qe_name in "${qe_names_array[@]}"; do
     
     # this will get recreated by sftp startup
     rm -rf "$output_dir/ingress"
-    
+
+    # remove readme to be replaced
+    rm -rf "$output_dir/README.md"
+
     # Process the template and replace variables
     sed "s/\${QE_NAME}/$qe_name/g; s/\${TAG}/$TAG/g; s/\${DATE}/$DATE/g; s/\${ORCHCTL_CRON}/$ORCHCTL_CRON/g" /README-template.md > "$output_dir/README.md"
 done
