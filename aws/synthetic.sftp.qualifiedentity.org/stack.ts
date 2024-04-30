@@ -24,12 +24,14 @@ export class SynSftpQE extends cdk.Stack {
     // Load environment variables from .env file
     dotenv.config({ path: "./synthetic.sftp.qualifiedentity.org/.env" });
     const containerBuildArgs = {
+      DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
       REPO_URL: process.env.REPO_URL || "",
       TAG: process.env.TAG || "",
       QE_NAMES: process.env.QE_NAMES || "",
       DATE: new Date().toISOString(),
-      ORCHCTL_CRON: process.env.ORCHCTL_CRON || "*/5 * * * *",
+      ORCHCTL_CRON: process.env.ORCHCTL_CRON || "0 * * * *",
       FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
+      SEMAPHORE: process.env.SEMAPHORE || "",
     }
     // create the VPC
     const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
