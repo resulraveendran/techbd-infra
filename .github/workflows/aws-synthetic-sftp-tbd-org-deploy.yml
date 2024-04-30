@@ -46,7 +46,7 @@ jobs:
         run: |
           rm -rf ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           mkdir -p ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/* ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           ls aws/synthetic.sftp.techbd.org/containers
           cd aws
           npm install
