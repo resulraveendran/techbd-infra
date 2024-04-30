@@ -13,14 +13,17 @@ IFS=' ' read -r -a qe_names_array <<< "$QE_NAMES"
 
 # define the file name and path
 crontab_file="/etc/cron.d/1115-hub"
+rm -f "$crontab_file"
 
 # add path to crontab
 echo "PATH=/usr/local/bin:/usr/bin:/bin" > "$crontab_file"
+
 
 for qe_name in "${qe_names_array[@]}"; do
     
     # write the following to the crontab file for each qe:
     QE_UPPER=$(echo $qe_name | tr '[:lower:]' '[:upper:]')
+
     # 0 * * * * cd /app/1115-hub; /root/.deno/bin/deno run -A ./src/ahc-hrsn-elt/screening/orchctl.ts --qe bronx --publish-fhir 40lafnwsw7.execute-api.us-east-1.amazonaws.com/dev --publish-fhir-qe-id BRONX >> /SFTP/observe/log/bronx.log 2>&1
     echo "$ORCHCTL_CRON cd /app/1115-hub; /root/.deno/bin/deno run -A ./src/ahc-hrsn-elt/screening/orchctl.ts --qe $qe_name --publish-fhir $FHIR_ENDPOINT --publish-fhir-qe-id $QE_UPPER >> /SFTP/observe/log/$qe_name.log 2>&1" >> "$crontab_file"
 done
