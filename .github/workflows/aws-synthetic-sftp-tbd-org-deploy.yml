@@ -35,12 +35,12 @@ jobs:
         run: |
           npm install -g aws-cdk 
 
-      - name: check changes to infrastructure
-        run: |
-          cd aws
-          npm install
-          cdk bootstrap
-          cdk diff *-techbd-org
+      # - name: check changes to infrastructure
+      #   run: |
+      #     cd aws
+      #     npm install
+      #     cdk bootstrap
+      #     cdk diff *-techbd-org
       
       - name: deploy infrastructure
         run: |
