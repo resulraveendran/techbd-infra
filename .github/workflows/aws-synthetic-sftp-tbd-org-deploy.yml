@@ -28,27 +28,17 @@ jobs:
           
       - name: Create required symbolic links
         run: |
-          rm -rf ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.sftp.qualifiedentity.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
 
       - name: install/configure cdk
         run: |
           npm install -g aws-cdk 
-
-      # - name: check changes to infrastructure
-      #   run: |
-      #     cd aws
-      #     npm install
-      #     cdk bootstrap
-      #     cdk diff *-techbd-org
       
       - name: deploy infrastructure
         run: |
-          rm -rf ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          mkdir -p ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/* ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          ls -alR aws/synthetic.sftp.techbd.org/
           cd aws
+          ls -alR .
           npm install
           cdk deploy *-techbd-org --outputs-file output.json --require-approval never
 
