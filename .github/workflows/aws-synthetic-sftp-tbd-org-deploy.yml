@@ -47,7 +47,7 @@ jobs:
           rm -rf ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           mkdir -p ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/* ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
-          tree -d aws/synthetic.sftp.techbd.org
+          tree -d -L 5 aws/synthetic.sftp.techbd.org
           cd aws
           npm install
           cdk deploy *-techbd-org --outputs-file output.json --require-approval never
