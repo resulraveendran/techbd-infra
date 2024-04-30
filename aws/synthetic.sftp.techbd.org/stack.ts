@@ -22,7 +22,7 @@ export class SynSftpTBD extends cdk.Stack {
     //
     //
     // Load environment variables from .env file
-    dotenv.config({ path: path.join(__dirname, ".env") });
+    dotenv.config({ path: "./synthetic.sftp.techbd.org/.env" });
     const containerBuildArgs = {
       REPO_URL: process.env.REPO_URL || "",
       TAG: process.env.TAG || "",

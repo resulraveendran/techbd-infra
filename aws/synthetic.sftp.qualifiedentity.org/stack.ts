@@ -22,13 +22,13 @@ export class SynSftpQE extends cdk.Stack {
     //
     //
     // Load environment variables from .env file
-    dotenv.config({ path: path.join(__dirname, ".env") });
+    dotenv.config({ path: "./synthetic.sftp.qualifiedentity.org/.env" });
     const containerBuildArgs = {
       REPO_URL: process.env.REPO_URL || "",
       TAG: process.env.TAG || "",
       QE_NAMES: process.env.QE_NAMES || "",
       DATE: new Date().toISOString(),
-      ORCHCTL_CRON: process.env.ORCHCTL_CRON || "0 * * * *",
+      ORCHCTL_CRON: process.env.ORCHCTL_CRON || "*/5 * * * *",
       FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
     }
     // create the VPC
