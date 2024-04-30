@@ -28,7 +28,7 @@ jobs:
           
       - name: Create required symbolic links
         run: |
-          # sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          rm -rf ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           cp -r ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
 
       - name: install/configure cdk
