@@ -29,20 +29,11 @@ jobs:
       - name: Create required symbolic links
         run: |
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.sftp.qualifiedentity.org/containers
-          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.qualifiedentity.org/containers
 
-          
-      
       - name: install/configure cdk
         run: |
           npm install -g aws-cdk 
-
-      # - name: check changes to infrastructure
-      #   run: |
-      #     cd aws
-      #     npm install
-      #     cdk bootstrap
-      #     cdk diff *-qualifiedentity-org
       
       - name: deploy infrastructure
         run: |

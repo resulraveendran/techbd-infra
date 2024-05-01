@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   sftp:
     build:
@@ -45,12 +43,14 @@ services:
     depends_on:
       - sftp
       - postgres
-  pg-sqlpage:
-    image: lovasoa/sqlpage
+  fhir:
+    build:
+      context: ./fhir/
+      dockerfile: Dockerfile
+      args:
+        REPO_URL: ${REPO_URL}
+        QE_NAMES: ${QE_NAMES}
+        TAG: ${TAG}
+        DATE: ${DATE}
     ports:
-      - "8083:8083"
-    environment:
-      - database_url=postgresql://qe:qe@postgres:5432/qe
-    depends_on:
-      - postgres
- 
+      - "8080:8080"
