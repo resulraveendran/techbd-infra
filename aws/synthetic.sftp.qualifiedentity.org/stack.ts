@@ -11,7 +11,10 @@ import * as dotenv from "dotenv";
 import path = require("path");
 
 
-export interface SynSftpQEProps extends cdk.StackProps { }
+export interface SynSftpQEProps extends cdk.StackProps { 
+  vpc: ec2.Vpc;
+  cluster: ecs.Cluster;
+}
 
 export class SynSftpQE extends cdk.Stack {
   constructor(scope: Construct, id: string, props: SynSftpQEProps) {
@@ -33,18 +36,10 @@ export class SynSftpQE extends cdk.Stack {
       FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
       SEMAPHORE: process.env.SEMAPHORE || "",
     }
-    // create the VPC
-    const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
-
-    // create the ECS cluster
-    const cluster = new ecs.Cluster(this, "Cluster", {
-      vpc: vpc,
-      containerInsights: true,
-    });
-
+    
     // Create the EFS filesystem
     const fileSystem = new efs.FileSystem(this, "SharedEfsFileSystem", {
-      vpc,
+      vpc: props.vpc,
       encrypted: true,
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS, // Adjust according to your needs
       performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
@@ -57,8 +52,8 @@ export class SynSftpQE extends cdk.Stack {
     });
 
     // Allow ECS tasks to connect to the EFS filesystem
-    fileSystem.connections.allowDefaultPortFrom(cluster.connections);
-    fileSystem.connections.allowDefaultPortTo(cluster.connections);
+    fileSystem.connections.allowDefaultPortFrom(props.cluster.connections);
+    fileSystem.connections.allowDefaultPortTo(props.cluster.connections);
 
     // Define the EFS volume for ECS tasks
     const efsVolume: ecs.Volume = {
@@ -100,7 +95,7 @@ export class SynSftpQE extends cdk.Stack {
       this,
       "workflowServiceSecurityGroup",
       {
-        vpc,
+        vpc:props.vpc,
         allowAllOutbound: true,
       }
     );
@@ -129,7 +124,7 @@ export class SynSftpQE extends cdk.Stack {
         this,
         "workflowService",
         {
-          cluster,
+          cluster:props.cluster,
           desiredCount: 1,
           cpu: 2048,
           memoryLimitMiB: 4096,
@@ -201,7 +196,7 @@ export class SynSftpQE extends cdk.Stack {
 
     // create a security group for the sftp service
     const sftpSg = new ec2.SecurityGroup(this, "sftpServiceSecurityGroup", {
-      vpc,
+      vpc:props.vpc,
       allowAllOutbound: true,
     });
 
@@ -224,7 +219,7 @@ export class SynSftpQE extends cdk.Stack {
       this,
       "sftpService",
       {
-        cluster,
+        cluster:props.cluster,
         desiredCount: 2,
         cpu: 256,
         memoryLimitMiB: 512,

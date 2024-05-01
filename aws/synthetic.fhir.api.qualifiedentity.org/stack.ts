@@ -11,7 +11,10 @@ import * as dotenv from "dotenv";
 import path = require("path");
 
 
-export interface SynFhirApiQEProps extends cdk.StackProps { }
+export interface SynFhirApiQEProps extends cdk.StackProps {
+    vpc: ec2.Vpc;
+    cluster: ecs.Cluster;
+ }
 
 export class SynFhirApiQE extends cdk.Stack {
     constructor(scope: Construct, id: string, props: SynFhirApiQEProps) {
@@ -25,14 +28,7 @@ export class SynFhirApiQE extends cdk.Stack {
             DATE: new Date().toISOString(),
             SEMAPHORE: process.env.SEMAPHORE || "",
         }
-        // create the VPC
-        const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
-
-        // create the ECS cluster
-        const cluster = new ecs.Cluster(this, "Cluster", {
-            vpc: vpc,
-            containerInsights: true,
-        });
+        
         // create a role for fhir tasks to access the EFS filesystem
         const fhirTaskRole = new iam.Role(this, "fhirTaskRole", {
             assumedBy: new iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
@@ -44,7 +40,7 @@ export class SynFhirApiQE extends cdk.Stack {
             this,
             "fhirServiceSecurityGroup",
             {
-                vpc,
+                vpc: props.vpc,
                 allowAllOutbound: true,
             }
         );
@@ -73,7 +69,7 @@ export class SynFhirApiQE extends cdk.Stack {
                 this,
                 "fhirService",
                 {
-                    cluster,
+                    cluster:props.cluster,
                     desiredCount: 1,
                     cpu: 2048,
                     memoryLimitMiB: 4096,
