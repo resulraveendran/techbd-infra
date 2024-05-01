@@ -10,5 +10,11 @@ new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {});
 
 
 const SynQECluster = new EcsCluster(app, 'synthetic-shared-qualifiedentity-org', {});
-new SynSftpQE(app, 'synthetic-sftp-qualifiedentity-org', {});
-new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {});
+new SynSftpQE(app, 'synthetic-sftp-qualifiedentity-org', {
+    vpc: SynQECluster.vpc,
+    cluster: SynQECluster.cluster
+});
+new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
+    vpc: SynQECluster.vpc,
+    cluster: SynQECluster.cluster
+});
