@@ -19,6 +19,10 @@ const SynQECluster = new EcsCluster(app, 'synthetic-shared-qualifiedentity-org',
     }
 });
 new SynSftpQE(app, 'synthetic-sftp-qualifiedentity-org', {
+    env: {
+        account,
+        region
+    },
     vpc: SynQECluster.vpc,
     cluster: SynQECluster.cluster
 });
