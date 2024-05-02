@@ -85,7 +85,7 @@ export class SynFhirApiQE extends cdk.Stack {
                         taskRole: fhirTaskRole,
                     },
                     publicLoadBalancer: true,
-                    domainName: "synthetic.fhir.api.techbd.org",
+                    domainName: "synthetic.fhir.api.devl.techbd.org",
                     domainZone: props.zone,
                     certificate: props.cert,
                     redirectHTTP: true,
