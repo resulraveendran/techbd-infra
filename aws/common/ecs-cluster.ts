@@ -11,12 +11,15 @@ import { Construct } from 'constructs';
 
 export interface EcsClusterProps extends cdk.StackProps { }
 
+export function ecsCluster(stack: cdk.Stack, props: EcsClusterProps): EcsCluster {
+    return new EcsCluster(stack, 'EcsCluster', props);
+}
+
 export class EcsCluster extends cdk.Stack {
     vpc: ec2.Vpc;
     cluster: ecs.Cluster;
     constructor(scope: Construct, id: string, props: EcsClusterProps) {
         super(scope, id, props);
-
 
         // create the VPC
         this.vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });

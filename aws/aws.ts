@@ -2,7 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { SynSftpTBD } from './synthetic.sftp.techbd.org/stack';
 import { SynSftpQE } from './synthetic.sftp.qualifiedentity.org/stack';
 import { SynFhirApiQE } from './synthetic.fhir.api.qualifiedentity.org/stack';
-import { EcsCluster } from './common/ecs-cluster';
+import { EcsCluster, ecsCluster } from './common/ecs-cluster';
 
 
 const app = new cdk.App();

@@ -79,7 +79,7 @@ export class SynFhirApiQE extends cdk.Stack {
                         containerPort: 8080,
                         taskRole: fhirTaskRole,
                     },
-                    publicLoadBalancer: false,
+                    publicLoadBalancer: true,
                     listenerPort: 8080,
                     healthCheckGracePeriod: cdk.Duration.seconds(300),
                     securityGroups: [fhirSg],
