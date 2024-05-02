@@ -3,7 +3,9 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as efs from "aws-cdk-lib/aws-efs";
 import * as ecs from "aws-cdk-lib/aws-ecs";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as ecrAssets from "aws-cdk-lib/aws-ecr-assets";
+import * as route53 from "aws-cdk-lib/aws-route53";
 import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
@@ -14,6 +16,8 @@ import path = require("path");
 export interface SynFhirApiQEProps extends cdk.StackProps {
     vpc: ec2.Vpc;
     cluster: ecs.Cluster;
+    cert: acm.ICertificate;
+    zone: route53.IHostedZone;
  }
 
 export class SynFhirApiQE extends cdk.Stack {
@@ -62,6 +66,7 @@ export class SynFhirApiQE extends cdk.Stack {
                 platform: ecrAssets.Platform.LINUX_AMD64,
             }
         );
+       
 
         // Create a load-balanced Fargate service and make it public
         const fhirService =
@@ -80,7 +85,10 @@ export class SynFhirApiQE extends cdk.Stack {
                         taskRole: fhirTaskRole,
                     },
                     publicLoadBalancer: true,
-                    listenerPort: 8080,
+                    domainName: "synthetic.fhir.api.techbd.org",
+                    domainZone: props.zone,
+                    certificate: props.cert,
+                    redirectHTTP: true,
                     healthCheckGracePeriod: cdk.Duration.seconds(300),
                     securityGroups: [fhirSg],
                     enableExecuteCommand: true,

@@ -16,5 +16,7 @@ new SynSftpQE(app, 'synthetic-sftp-qualifiedentity-org', {
 });
 new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
     vpc: SynQECluster.vpc,
-    cluster: SynQECluster.cluster
+    cluster: SynQECluster.cluster,
+    cert: SynQECluster.certificate,
+    zone: SynQECluster.zone
 });
