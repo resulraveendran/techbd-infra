@@ -133,6 +133,7 @@ export class SynSftpQE extends cdk.Stack {
             enableLogging: true,
             containerPort: 8082,
             taskRole: workflowTaskRole,
+            environment: containerBuildArgs,
           },
           publicLoadBalancer: false,
           listenerPort: 8082,
@@ -208,7 +209,7 @@ export class SynSftpQE extends cdk.Stack {
     );
 
     // create a load-balanced Fargate service for the sftp container
-    const sftpDockerImage = new ecrAssets.DockerImageAsset(this, "sftpImage", {
+    const sftpDockerImage = new ecrAssets.DockerImageAsset(this, "sftpQualifiedEntityImage", {
       directory: "./synthetic.sftp.qualifiedentity.org/containers/sftp/", // Adjust this to the path of your Docker context
       file: "Dockerfile", // Specify the Dockerfile name
       platform: ecrAssets.Platform.LINUX_AMD64,
