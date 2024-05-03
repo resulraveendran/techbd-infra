@@ -7,7 +7,6 @@ import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as ecrAssets from "aws-cdk-lib/aws-ecr-assets";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
-import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 import * as dotenv from "dotenv";
 import path = require("path");

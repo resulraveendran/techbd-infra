@@ -35,6 +35,7 @@ export class EcsCluster extends cdk.Stack {
         this.cluster = new ecs.Cluster(this, "Cluster", {
             vpc: this.vpc,
             containerInsights: true,
+            
         });
 
         // create a hosted zone

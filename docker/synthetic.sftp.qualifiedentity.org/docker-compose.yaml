@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   sftp:
     build:
@@ -7,7 +9,6 @@ services:
         QE_NAMES: ${QE_NAMES}
         TAG: ${TAG}
         DATE: ${DATE}
-        INTERVAL: ${INTERVAL}
         ORCHCTL_CRON: ${ORCHCTL_CRON}
         FHIR_ENDPOINT: ${FHIR_ENDPOINT}
         SEMAPHORE: ${SEMAPHORE}
@@ -43,14 +44,12 @@ services:
     depends_on:
       - sftp
       - postgres
-  fhir:
-    build:
-      context: ./fhir/
-      dockerfile: Dockerfile
-      args:
-        REPO_URL: ${REPO_URL}
-        QE_NAMES: ${QE_NAMES}
-        TAG: ${TAG}
-        DATE: ${DATE}
+  pg-sqlpage:
+    image: lovasoa/sqlpage
     ports:
-      - "8080:8080"
+      - "8083:8083"
+    environment:
+      - database_url=postgresql://qe:qe@postgres:5432/qe
+    depends_on:
+      - postgres
+ 

@@ -25,6 +25,10 @@ ARG REPO_URL
 ARG TAG
 RUN git clone --depth 1 --branch ${TAG} ${REPO_URL}
 
+# run deno check to install required dependencies
+RUN deno cache ./1115-hub/src/ahc-hrsn-elt/screening/orchctl.ts
+RUN deno check --config ./1115-hub/deno.jsonc ./1115-hub/src/ahc-hrsn-elt/screening/orchctl.ts
+
 # Run a Deno script from the cloned repo and store its output in a log file
 RUN deno run -A ./1115-hub/support/bin/doctor.ts >/doctor_log.txt
 
