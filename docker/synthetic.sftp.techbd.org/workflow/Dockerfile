@@ -48,17 +48,48 @@ ENV INTERVAL=${INTERVAL}
 ENV ORCHCTL_CRON=${ORCHCTL_CRON}
 ENV FHIR_ENDPOINT=${FHIR_ENDPOINT}
 
-# Add the cron job script
-COPY create-crontab.sh /create-crontab.sh
-RUN chmod +x /create-crontab.sh
+RUN echo "Debug: QE_NAMES='$QE_NAMES', ORCHCTL_CRON='$ORCHCTL_CRON', FHIR_ENDPOINT='$FHIR_ENDPOINT'"
 
-# Add the health check script
-COPY health-check.sh /health-check.sh
-RUN chmod +x /health-check.sh
+# Ensure that QE_NAMES, version, date, and ORCHCTL_CRON variables are provided
+# Use bash to execute the command
+RUN /bin/bash -c "if [[ -z \"$QE_NAMES\" || -z \"$ORCHCTL_CRON\" || -z \"$FHIR_ENDPOINT\" ]]; then \
+        echo \"Environment variables QE_NAMES, TAG, DATE, DEPLOYMENT_DOMAIN, SEMAPHORE, ORCHCTL_CRON must be set.\"; \
+        exit 1; \
+    fi"
 
-# Add the startup script to start cron and then do other tasks
-COPY start-services.sh /start-services.sh
-RUN chmod +x /start-services.sh
+# Iterate over the QE_NAMES, treating it as a space-separated list 
+RUN /bin/bash -c "IFS=' ' read -r -a qe_names_array <<< \"$QE_NAMES\";"
 
-# run the health check script in the background
-CMD ["/start-services.sh"]
+# define the file name and path
+ENV crontab_file=/etc/cron.d/1115-hub
+RUN touch $crontab_file
+
+
+# add path to crontab
+RUN echo "PATH=/usr/local/bin:/usr/bin:/bin" >> $crontab_file
+
+RUN /bin/bash -c "\
+    IFS=' ' read -r -a qe_names_array <<< \"$QE_NAMES\"; \
+    for qe_name in \${qe_names_array[@]}; do \
+        QE_UPPER=\$(echo \$qe_name | tr '[:lower:]' '[:upper:]'); \
+        echo \"\$ORCHCTL_CRON cd /app/1115-hub; /root/.deno/bin/deno run -A ./src/ahc-hrsn-elt/screening/orchctl.ts --qe \$qe_name --publish-fhir \$FHIR_ENDPOINT --publish-fhir-qe-id \$QE_UPPER >> /SFTP/observe/log/\$qe_name.log 2>&1\" >> \"\$crontab_file\"; \
+    done"
+
+
+RUN /bin/bash -c "echo '0 * * * * cd /app/1115-hub; /root/.deno/bin/deno run -A ./support/bin/doctor.ts >> /doctor_log.txt 2>&1' >> /etc/cron.d/1115-hub"
+
+RUN /bin/bash -c "\
+    health_status_file="/doctor_log.txt"\
+    while true; do \
+        health_status_content=$(<"$health_status_file") \
+        content_length=${#health_status_content} \
+        echo -e "HTTP/1.1 200 OK\nContent-Length: $content_length\nConnection: close\n\n$health_status_content" | nc -l -p 8082 -N \
+    done" &
+
+RUN chmod 0644 /etc/cron.d/1115-hub
+RUN crontab /etc/cron.d/1115-hub
+
+# Run the cron job
+RUN service cron start
+
+CMD ["cron", "-f"]

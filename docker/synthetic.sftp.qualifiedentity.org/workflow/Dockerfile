@@ -48,14 +48,6 @@ ENV INTERVAL=${INTERVAL}
 ENV ORCHCTL_CRON=${ORCHCTL_CRON}
 ENV FHIR_ENDPOINT=${FHIR_ENDPOINT}
 
-# Add the health check script
-COPY health-check.sh /health-check.sh
-RUN chmod +x /health-check.sh
-
-# Add the startup script to start cron and then do other tasks
-COPY start-services.sh /start-services.sh
-RUN chmod +x /start-services.sh
-
 RUN echo "Debug: QE_NAMES='$QE_NAMES', ORCHCTL_CRON='$ORCHCTL_CRON', FHIR_ENDPOINT='$FHIR_ENDPOINT'"
 
 # Ensure that QE_NAMES, version, date, and ORCHCTL_CRON variables are provided
