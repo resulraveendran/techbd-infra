@@ -27,14 +27,14 @@ export class SynSftpTBD extends cdk.Stack {
     // Load environment variables from .env file
     dotenv.config({ path: path.resolve(__dirname,"./synthetic.sftp.techbd.org/.env") });
     const containerBuildArgs = {
-      DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN,
-      REPO_URL: process.env.REPO_URL,
-      TAG: process.env.TAG,
-      QE_NAMES: process.env.QE_NAMES,
+      DEPLOYMENT_DOMAIN: `${process.env.DEPLOYMENT_DOMAIN}`,
+      REPO_URL: `${process.env.REPO_URL}`,
+      TAG: `${process.env.TAG}`,
+      QE_NAMES: `${process.env.QE_NAMES}`,
       DATE: new Date().toISOString(),
-      ORCHCTL_CRON: process.env.ORCHCTL_CRON,
-      FHIR_ENDPOINT: process.env.FHIR_ENDPOINT,
-      SEMAPHORE: process.env.SEMAPHORE,
+      ORCHCTL_CRON: `${process.env.ORCHCTL_CRON}`,
+      FHIR_ENDPOINT: `${process.env.FHIR_ENDPOINT}`,
+      SEMAPHORE: `${process.env.SEMAPHORE}`,
     }
     
     // Create the EFS filesystem
