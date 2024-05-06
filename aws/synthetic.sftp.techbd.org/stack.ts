@@ -11,7 +11,10 @@ import * as dotenv from "dotenv";
 import path = require("path");
 
 
-export interface SynSftpTBDProps extends cdk.StackProps { }
+export interface SynSftpTBDProps extends cdk.StackProps { 
+  vpc: ec2.Vpc;
+  cluster: ecs.Cluster;
+}
 
 export class SynSftpTBD extends cdk.Stack {
   constructor(scope: Construct, id: string, props: SynSftpTBDProps) {
@@ -33,18 +36,10 @@ export class SynSftpTBD extends cdk.Stack {
       FHIR_ENDPOINT: process.env.FHIR_ENDPOINT || "",
       SEMAPHORE: process.env.SEMAPHORE || "",
     }
-    // create the VPC
-    const vpc = new ec2.Vpc(this, "VPC", { maxAzs: 2 });
-
-    // create the ECS cluster
-    const cluster = new ecs.Cluster(this, "Cluster", {
-      vpc: vpc,
-      containerInsights: true,
-    });
-
+    
     // Create the EFS filesystem
     const fileSystem = new efs.FileSystem(this, "SharedEfsFileSystem", {
-      vpc,
+      vpc: props.vpc,
       encrypted: true,
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS, // Adjust according to your needs
       performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
@@ -57,8 +52,8 @@ export class SynSftpTBD extends cdk.Stack {
     });
 
     // Allow ECS tasks to connect to the EFS filesystem
-    fileSystem.connections.allowDefaultPortFrom(cluster.connections);
-    fileSystem.connections.allowDefaultPortTo(cluster.connections);
+    fileSystem.connections.allowDefaultPortFrom(props.cluster.connections);
+    fileSystem.connections.allowDefaultPortTo(props.cluster.connections);
 
     // Define the EFS volume for ECS tasks
     const efsVolume: ecs.Volume = {
@@ -100,7 +95,7 @@ export class SynSftpTBD extends cdk.Stack {
       this,
       "workflowServiceSecurityGroup",
       {
-        vpc,
+        vpc:props.vpc,
         allowAllOutbound: true,
       }
     );
@@ -129,7 +124,7 @@ export class SynSftpTBD extends cdk.Stack {
         this,
         "workflowService",
         {
-          cluster,
+          cluster:props.cluster,
           desiredCount: 1,
           cpu: 2048,
           memoryLimitMiB: 4096,
@@ -138,6 +133,7 @@ export class SynSftpTBD extends cdk.Stack {
             enableLogging: true,
             containerPort: 8082,
             taskRole: workflowTaskRole,
+            environment: containerBuildArgs,
           },
           publicLoadBalancer: false,
           listenerPort: 8082,
@@ -201,7 +197,7 @@ export class SynSftpTBD extends cdk.Stack {
 
     // create a security group for the sftp service
     const sftpSg = new ec2.SecurityGroup(this, "sftpServiceSecurityGroup", {
-      vpc,
+      vpc:props.vpc,
       allowAllOutbound: true,
     });
 
@@ -213,7 +209,7 @@ export class SynSftpTBD extends cdk.Stack {
     );
 
     // create a load-balanced Fargate service for the sftp container
-    const sftpDockerImage = new ecrAssets.DockerImageAsset(this, "sftpImage", {
+    const sftpDockerImage = new ecrAssets.DockerImageAsset(this, "sftpQualifiedEntityImage", {
       directory: "./synthetic.sftp.techbd.org/containers/sftp/", // Adjust this to the path of your Docker context
       file: "Dockerfile", // Specify the Dockerfile name
       platform: ecrAssets.Platform.LINUX_AMD64,
@@ -224,7 +220,7 @@ export class SynSftpTBD extends cdk.Stack {
       this,
       "sftpService",
       {
-        cluster,
+        cluster:props.cluster,
         desiredCount: 2,
         cpu: 256,
         memoryLimitMiB: 512,
@@ -287,4 +283,5 @@ export class SynSftpTBD extends cdk.Stack {
     });
   }
 }
+
 
