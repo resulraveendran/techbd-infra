@@ -10,9 +10,6 @@ const app = new cdk.App();
 const region = "us-east-1";
 const account= "339712786701";
 
-// new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
-// });
-
 // techbd.org
 const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org', {
     env: {

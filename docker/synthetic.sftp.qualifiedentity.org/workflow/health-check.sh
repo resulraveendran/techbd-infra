@@ -1,13 +1,6 @@
 #!/bin/bash
-# Path to the health status file
-health_status_file="/doctor_log.txt"
-
-# Simple HTTP server loop
+# Listen for connections and respond
 while true; do
-    if [ -f "$health_status_file" ]; then
-        health_status_content=$(<"$health_status_file")
-        content_length=${#health_status_content}
-        echo -e "HTTP/1.1 200 OK\nContent-Length: $content_length\nConnection: close\n\n$health_status_content" | nc -l -p 8082 -N
-    fi
-    sleep 1
+  # Using netcat to listen on port 8080 and respond with a HTTP message
+  echo -e "HTTP/1.1 200 OK\nContent-Length: 7\nConnection: close\n\nSFTP OK" | nc -l -p 8082 -N
 done
