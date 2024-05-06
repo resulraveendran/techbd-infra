@@ -25,7 +25,7 @@ export class SynSftpQE extends cdk.Stack {
     //
     //
     // Load environment variables from .env file
-    dotenv.config({ path: "./synthetic.sftp.qualifiedentity.org/.env" });
+    dotenv.config({ path: path.resolve(__dirname,"./synthetic.sftp.qualifiedentity.org/.env") });
     const containerBuildArgs = {
       DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN,
       REPO_URL: process.env.REPO_URL,
