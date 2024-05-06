@@ -174,16 +174,6 @@ export class SynSftpTBD extends cdk.Stack {
       readOnly: false,
     });
 
-    // Setup AutoScaling policy
-    // const workflowServiceScaling = workflowService.service.autoScaleTaskCount({
-    //   maxCapacity: 1,
-    // });
-    // workflowServiceScaling.scaleOnCpuUtilization("CpuScaling", {
-    //   targetUtilizationPercent: 500,
-    //   scaleInCooldown: cdk.Duration.seconds(60),
-    //   scaleOutCooldown: cdk.Duration.seconds(60),
-    // });
-
     //
     //
     // SFTP Service

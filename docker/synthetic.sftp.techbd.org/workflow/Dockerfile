@@ -1,6 +1,6 @@
 # Use Debian 11 (Bullseye) slim as the base image
 FROM debian:bullseye-slim
-
+RUN echo "1"
 # Avoid prompts from apt during build
 ENV DEBIAN_FRONTEND=noninteractive
 
