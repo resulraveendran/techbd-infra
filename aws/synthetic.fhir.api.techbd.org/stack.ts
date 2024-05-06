@@ -12,18 +12,18 @@ import * as dotenv from "dotenv";
 import path = require("path");
 
 
-export interface SynFhirApiQEProps extends cdk.StackProps {
+export interface SynFhirApiTBDProps extends cdk.StackProps {
     vpc: ec2.Vpc;
     cluster: ecs.Cluster;
     cert: acm.ICertificate;
     zone: route53.IHostedZone;
  }
 
-export class SynFhirApiQE extends cdk.Stack {
-    constructor(scope: Construct, id: string, props: SynFhirApiQEProps) {
+export class SynFhirApiTBD extends cdk.Stack {
+    constructor(scope: Construct, id: string, props: SynFhirApiTBDProps) {
         super(scope, id, props);
         // Load environment variables from .env file
-        dotenv.config({ path: "./synthetic.fhir.api.qualifiedentity.org/.env" });
+        dotenv.config({ path: "./synthetic.fhir.api.techbd.org/.env" });
         const containerBuildArgs = {
             DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
             REPO_URL: process.env.REPO_URL || "",
@@ -59,7 +59,7 @@ export class SynFhirApiQE extends cdk.Stack {
             this,
             "fhirImage",
             {
-                directory: "./synthetic.fhir.api.qualifiedentity.org/containers/fhir/", // Adjust this to the path of your Docker context
+                directory: "./synthetic.fhir.api.techbd.org/containers/fhir/", // Adjust this to the path of your Docker context
                 file: "Dockerfile", // Specify the Dockerfile name
                 buildArgs: containerBuildArgs,
                 platform: ecrAssets.Platform.LINUX_AMD64,
@@ -84,7 +84,7 @@ export class SynFhirApiQE extends cdk.Stack {
                         taskRole: fhirTaskRole,
                     },
                     publicLoadBalancer: true,
-                    domainName: "synthetic.fhir.api.devl.techbd.org",
+                    domainName: "synthetic.fhir.api.techbd.org",
                     domainZone: props.zone,
                     certificate: props.cert,
                     redirectHTTP: true,

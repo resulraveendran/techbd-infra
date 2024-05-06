@@ -78,13 +78,9 @@ RUN /bin/bash -c "\
 
 RUN /bin/bash -c "echo '0 * * * * cd /app/1115-hub; /root/.deno/bin/deno run -A ./support/bin/doctor.ts >> /doctor_log.txt 2>&1' >> /etc/cron.d/1115-hub"
 
-RUN /bin/bash -c "\
-    health_status_file="/doctor_log.txt"\
-    while true; do \
-        health_status_content=$(<"$health_status_file") \
-        content_length=${#health_status_content} \
-        echo -e "HTTP/1.1 200 OK\nContent-Length: $content_length\nConnection: close\n\n$health_status_content" | nc -l -p 8082 -N \
-    done" &
+# Add the health check script
+COPY health-check.sh /health-check.sh
+RUN chmod +x /health-check.sh
 
 RUN chmod 0644 /etc/cron.d/1115-hub
 RUN crontab /etc/cron.d/1115-hub
@@ -92,4 +88,5 @@ RUN crontab /etc/cron.d/1115-hub
 # Run the cron job
 RUN service cron start
 
+ENTRYPOINT ["/health-check.sh"]
 CMD ["cron", "-f"]

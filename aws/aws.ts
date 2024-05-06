@@ -6,12 +6,16 @@ import { EcsCluster, ecsCluster } from './common/ecs-cluster';
 
 
 const app = new cdk.App();
-new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
 
-});
 
 const region = "us-east-1";
 const account= "339712786701";
+
+
+new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
+});
+
+
 const SynQECluster = new EcsCluster(app, 'synthetic-shared-qualifiedentity-org', {
     env: {
         account,
