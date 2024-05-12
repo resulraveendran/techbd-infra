@@ -36,7 +36,7 @@ export class SynSftpQE extends cdk.Stack {
       FHIR_ENDPOINT: `${process.env.FHIR_ENDPOINT}`,
       SEMAPHORE: `${process.env.SEMAPHORE}`,
     }
-    
+    console.log(`containerBuildArgs: ${containerBuildArgs}`)
     // Create the EFS filesystem
     const fileSystem = new efs.FileSystem(this, "SharedEfsFileSystem", {
       vpc: props.vpc,

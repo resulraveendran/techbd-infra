@@ -31,7 +31,7 @@ export class SynFhirApiQE extends cdk.Stack {
             DATE: new Date().toISOString(),
             SEMAPHORE: process.env.SEMAPHORE || "",
         }
-        
+        console.log(`containerBuildArgs: ${containerBuildArgs}`)
         // create a role for fhir tasks to access the EFS filesystem
         const fhirTaskRole = new iam.Role(this, "fhirTaskRole", {
             assumedBy: new iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
