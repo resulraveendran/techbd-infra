@@ -63,6 +63,7 @@ export class SynFhirApiTBD extends cdk.Stack {
                 file: "Dockerfile", // Specify the Dockerfile name
                 buildArgs: containerBuildArgs,
                 platform: ecrAssets.Platform.LINUX_AMD64,
+                cacheDisabled: true,
             }
         );
        

@@ -115,6 +115,7 @@ export class SynSftpQE extends cdk.Stack {
         file: "Dockerfile", // Specify the Dockerfile name
         buildArgs: containerBuildArgs,
         platform: ecrAssets.Platform.LINUX_AMD64,
+        cacheDisabled: true,
       }
     );
 
@@ -205,6 +206,7 @@ export class SynSftpQE extends cdk.Stack {
       file: "Dockerfile", // Specify the Dockerfile name
       platform: ecrAssets.Platform.LINUX_AMD64,
       buildArgs: containerBuildArgs,
+      cacheDisabled: true,
     });
 
     const sftpService = new ecsPatterns.NetworkLoadBalancedFargateService(
