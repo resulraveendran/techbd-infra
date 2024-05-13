@@ -23,7 +23,11 @@ export class SynFhirApiTBD extends cdk.Stack {
     constructor(scope: Construct, id: string, props: SynFhirApiTBDProps) {
         super(scope, id, props);
         // Load environment variables from .env file
-        dotenv.config({ path: path.resolve(__dirname,".env") });
+        const envPath = path.resolve(__dirname, ".env");
+        console.log(`Loading environment variables from: ${envPath}`);
+        dotenv.config({ path: envPath });
+
+        // dotenv.config({ path: path.resolve(__dirname,".env") });
         const containerBuildArgs = {
             DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
             REPO_URL: process.env.REPO_URL || "",
