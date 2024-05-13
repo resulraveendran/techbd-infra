@@ -36,7 +36,7 @@ export class SynSftpTBD extends cdk.Stack {
       FHIR_ENDPOINT: `${process.env.FHIR_ENDPOINT}`,
       SEMAPHORE: `${process.env.SEMAPHORE}`,
     }
-    console.log(`containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
+    console.log(`sftp tbd containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
     // Create the EFS filesystem
     const fileSystem = new efs.FileSystem(this, "SharedEfsFileSystem", {
       vpc: props.vpc,
