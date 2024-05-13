@@ -35,14 +35,14 @@ jobs:
 
       - name: install/configure cdk
         run: |
-          npm install -g aws-cdk 
+          npm cache clean --force
+          npm install -g aws-cdk --cache=false 
       
       - name: deploy infrastructure
         run: |
           cd aws
-          ls -alR .
           npm cache clean --force
-          npm install
+          npm install --cache=false
           cdk deploy *-techbd-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact

@@ -23,5 +23,6 @@ EXPOSE 8080
 
 # start the fhir server
 WORKDIR /app/1115-hub/src/service/fhir-server-prime
-CMD ["mvn", "clean", "install", "jetty:run"]
+
+CMD ["mvn", "spring-boot:run", "-Dserver.port=8080", "-Dserver.host=localhost"]
 
