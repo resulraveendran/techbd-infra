@@ -41,6 +41,7 @@ jobs:
         run: |
           cd aws
           ls -alR .
+          npm cache clean --force
           npm install
           cdk deploy *-techbd-org --outputs-file output.json --require-approval never
 

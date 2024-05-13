@@ -40,6 +40,7 @@ jobs:
       - name: deploy infrastructure
         run: |
           cd aws
+          npm cache clean --force
           npm install
           cdk deploy *-qualifiedentity-org --outputs-file output.json --require-approval never
 
