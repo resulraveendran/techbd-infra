@@ -11,6 +11,10 @@ The TechBD IaC repository serves as the central hub for TechBD's infrastructure 
 - **Consistency and Standardization**: Ensure uniform standards across all infrastructure deployments, reducing the chances of discrepancies.
 - **Enhanced Security**: Simplify security protocols by concentrating all infrastructure code into a single repository.
 
+## CloudWatch Dashboards
+
+- [TechBD Synthetic Data Infrastructure Prime Health (Anonymous, non-authenticated)](https://cloudwatch.amazonaws.com/dashboard.html?dashboard=TechBD-Synthetic-Data-Infrastructure-Prime-Health&context=eyJSIjoidXMtZWFzdC0xIiwiRCI6ImN3LWRiLTMzOTcxMjc4NjcwMSIsIlUiOiJ1cy1lYXN0LTFfTkdaZDBSTU55IiwiQyI6IjY0Y28wamRsczBocDM2ZzE5OG04aGhjMTVhIiwiSSI6InVzLWVhc3QtMTplMWYzNDQ3ZC05NjVhLTRiZmItODNhMC0wOTYyMTA4NDk4OWUiLCJNIjoiUHVibGljIn0=)
+
 ## Repository Structure
 
 The repository is organized by technology stack and deployment environments as follows:
