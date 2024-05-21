@@ -30,7 +30,7 @@ export class SynFhirApiQE extends cdk.Stack {
         // Manually read and parse the .env file
         const envConfig = dotenv.parse(fs.readFileSync(envPath));
         const containerBuildArgs = {
-            DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
+            DEPLOYMENT_DOMAIN: envConfig.DEPLOYMENT_DOMAIN || "",
             REPO_URL: process.env.REPO_URL || "",
             TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
