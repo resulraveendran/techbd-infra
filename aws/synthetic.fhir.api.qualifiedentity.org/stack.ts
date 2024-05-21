@@ -27,14 +27,15 @@ export class SynFhirApiQE extends cdk.Stack {
         const envPath = path.resolve(__dirname, ".env");
         console.log(`Loading environment variables from: ${envPath}`);
         dotenv.config({ path: envPath });
-        // Manually read and parse the .env file
+        // Read and parse the .env file
         const envConfig = dotenv.parse(fs.readFileSync(envPath));
+        
         const containerBuildArgs = {
             DEPLOYMENT_DOMAIN: envConfig.DEPLOYMENT_DOMAIN || "",
-            REPO_URL: process.env.REPO_URL || "",
+            REPO_URL: envConfig.REPO_URL || "",
             TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
-            SEMAPHORE: process.env.SEMAPHORE || "",
+            SEMAPHORE: envConfig.SEMAPHORE || "",
         }
         console.log(`fhir qe containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
         // create a role for fhir tasks to access the EFS filesystem

@@ -10,7 +10,7 @@ import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { Construct } from "constructs";
 import * as dotenv from "dotenv";
 import path = require("path");
-
+import fs = require("fs");
 
 export interface SynFhirApiTBDProps extends cdk.StackProps {
     vpc: ec2.Vpc;
@@ -26,14 +26,16 @@ export class SynFhirApiTBD extends cdk.Stack {
         const envPath = path.resolve(__dirname, ".env");
         console.log(`Loading environment variables from: ${envPath}`);
         dotenv.config({ path: envPath });
+        // Read and parse the .env file
+        const envConfig = dotenv.parse(fs.readFileSync(envPath));
 
         // dotenv.config({ path: path.resolve(__dirname,".env") });
         const containerBuildArgs = {
-            DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
-            REPO_URL: process.env.REPO_URL || "",
-            TAG: process.env.TAG || "",
+            DEPLOYMENT_DOMAIN: envConfig.DEPLOYMENT_DOMAIN || "",
+            REPO_URL: envConfig.REPO_URL || "",
+            TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
-            SEMAPHORE: process.env.SEMAPHORE || "",
+            SEMAPHORE: envConfig.SEMAPHORE || "",
         }
         console.log(`fhir tbd containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
         // create a role for fhir tasks to access the EFS filesystem
