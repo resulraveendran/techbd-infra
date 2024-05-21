@@ -10,6 +10,7 @@ import * as ecsPatterns from "aws-cdk-lib/aws-ecs-patterns";
 import { Construct } from "constructs";
 import * as dotenv from "dotenv";
 import path = require("path");
+import fs = require("fs");
 
 
 export interface SynFhirApiQEProps extends cdk.StackProps {
@@ -26,10 +27,12 @@ export class SynFhirApiQE extends cdk.Stack {
         const envPath = path.resolve(__dirname, ".env");
         console.log(`Loading environment variables from: ${envPath}`);
         dotenv.config({ path: envPath });
+        // Manually read and parse the .env file
+        const envConfig = dotenv.parse(fs.readFileSync(envPath));
         const containerBuildArgs = {
             DEPLOYMENT_DOMAIN: process.env.DEPLOYMENT_DOMAIN || "",
             REPO_URL: process.env.REPO_URL || "",
-            TAG: process.env.TAG || "",
+            TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
             SEMAPHORE: process.env.SEMAPHORE || "",
         }
