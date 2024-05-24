@@ -24,17 +24,21 @@ export class SynSftpQE extends cdk.Stack {
     // Shared Services
     //
     //
-    // Load environment variables from .env file
-    dotenv.config({ path: path.resolve(__dirname,".env") });
+    const envPath = path.resolve(__dirname, ".env");
+    console.log(`Loading environment variables from: ${envPath}`);
+    dotenv.config({ path: envPath });
+    // Read and parse the .env file
+    const envConfig = dotenv.parse(fs.readFileSync(envPath));
+        
     const containerBuildArgs = {
-      DEPLOYMENT_DOMAIN: `${process.env.DEPLOYMENT_DOMAIN}`,
-      REPO_URL: `${process.env.REPO_URL}`,
-      TAG: `${process.env.TAG}`,
-      QE_NAMES: `${process.env.QE_NAMES}`,
-      DATE: new Date().toISOString(),
-      ORCHCTL_CRON: `${process.env.ORCHCTL_CRON}`,
-      FHIR_ENDPOINT: `${process.env.FHIR_ENDPOINT}`,
-      SEMAPHORE: `${process.env.SEMAPHORE}`,
+        DEPLOYMENT_DOMAIN: envConfig.DEPLOYMENT_DOMAIN || "",
+        REPO_URL: envConfig.REPO_URL || "",
+        TAG: envConfig.TAG || "",
+        QE_NAMES: envConfig.QE_NAMES || "",
+        ORCHCTL_CRON: envConfig.ORCHCTL_CRON || "",
+        FHIR_ENDPOINT: envConfig.FHIR_ENDPOINT || "",
+        DATE: new Date().toISOString(),
+        SEMAPHORE: envConfig.SEMAPHORE || "",
     }
     console.log(`sftp qe containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
     // Create the EFS filesystem
