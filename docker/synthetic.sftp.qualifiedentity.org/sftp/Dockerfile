@@ -15,11 +15,15 @@ ENV ORCHCTL_CRON=${ORCHCTL_CRON}
 ENV SEMAPHORE=${SEMAPHORE}
 ENV DEPLOYMENT_DOMAIN=${DEPLOYMENT_DOMAIN}
 
-# Install netcat for health checking purposes
+# Install wget
 RUN apt-get update && \
-    apt-get install -y netcat && \
+    apt-get install -y wget && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install netcat for health checking purposes
+RUN wget http://ftp.us.debian.org/debian/pool/main/n/netcat-openbsd/netcat-openbsd_1.217-3_amd64.deb && \
+    dpkg -i netcat-openbsd_1.217-3_amd64.deb
 
 # add the users conf file
 COPY users.conf /etc/sftp/users.conf
