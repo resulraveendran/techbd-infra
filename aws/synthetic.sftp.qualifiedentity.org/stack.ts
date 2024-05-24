@@ -9,6 +9,7 @@ import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 import * as dotenv from "dotenv";
 import path = require("path");
+import fs = require("fs");
 
 
 export interface SynSftpQEProps extends cdk.StackProps { 
