@@ -20,6 +20,6 @@ RUN git clone --depth 1 --branch ${TAG} ${REPO_URL}
 EXPOSE 8080
 
 # start the fhir server
-WORKDIR /app/1115-hub/src/service/fhir-server-prime
+WORKDIR /app/polyglot-prime/fhir
 
 CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.arguments=--server.port=8080 --server.host=0.0.0.0"]

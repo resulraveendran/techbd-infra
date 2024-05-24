@@ -3,6 +3,7 @@ import { SynSftpTBD } from './synthetic.sftp.techbd.org/stack';
 import { SynSftpQE } from './synthetic.sftp.qualifiedentity.org/stack';
 import { SynFhirApiQE } from './synthetic.fhir.api.qualifiedentity.org/stack';
 import { SynFhirApiTBD } from './synthetic.fhir.api.techbd.org/stack';
+import { SynFhirApiStageTBD } from './synthetic.fhir.api.stage.techbd.org/stack';
 import { EcsCluster } from './common/ecs-cluster';
 
 const app = new cdk.App();
@@ -35,8 +36,6 @@ new SynFhirApiTBD(app, 'synthetic-fhir-api-techbd-org', {
     zone: SynTBDCluster.zone
 });
 
-
-
 // devl.techbd.org
 const SynQECluster = new EcsCluster(app, 'synthetic-shared-qualifiedentity-org', {
     env: {
@@ -61,4 +60,22 @@ new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
     cluster: SynQECluster.cluster,
     cert: SynQECluster.certificate,
     zone: SynQECluster.zone
+});
+
+// stage.techbd.org
+const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-stage-techbd-org', {
+    env: {
+        account,
+        region
+    }
+});
+new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org', {
+    env: {
+        account,
+        region
+    },
+    vpc: SynStageTBDCluster.vpc,
+    cluster: SynStageTBDCluster.cluster,
+    cert: SynStageTBDCluster.certificate,
+    zone: SynStageTBDCluster.zone
 });

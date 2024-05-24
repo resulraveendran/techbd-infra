@@ -1,0 +1,55 @@
+name: synthetic-fhir-stage-techbd-org deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'aws/*stage.techbd.org/**'
+
+env:
+  AWS_REGION: "us-east-1"
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::339712786701:role/AdminAccess
+          role-session-name: GithubActions
+          aws-region: ${{env.AWS_REGION}}
+          audience: sts.amazonaws.com.
+          
+      - name: Create required symbolic links
+        run: |
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.sftp.qualifiedentity.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.qualifiedentity.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.stage.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.stage.techbd.org/containers          
+
+      - name: install/configure cdk
+        run: |
+          npm cache clean --force
+          npm install -g aws-cdk --cache=false
+      
+      - name: deploy infrastructure
+        run: |
+          cd aws
+          npm cache clean --force
+          npm install --cache=false
+          # cdk deploy *-stage-techbd-org --outputs-file output.json --require-approval never
+
+      - name: Upload cdk output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cdk-output-artifact
+          path: ./output.json
+          retention-days: 14
+
