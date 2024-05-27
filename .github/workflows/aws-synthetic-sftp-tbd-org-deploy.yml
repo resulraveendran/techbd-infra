@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'aws/synthetic.sftp.techbd.org/**'
+      - 'aws/synthetic.fhir.api.techbd.org/**'
 
 env:
   AWS_REGION: "us-east-1"
