@@ -45,7 +45,7 @@ jobs:
           cd aws
           npm cache clean --force
           npm install --cache=false
-          cdk deploy *prod-techbd-org --outputs-file output.json --require-approval never
+          cdk deploy *-techbd-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact
         uses: actions/upload-artifact@v3
