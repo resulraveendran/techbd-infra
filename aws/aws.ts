@@ -11,13 +11,13 @@ const region = "us-east-1";
 const account= "339712786701";
 
 // techbd.org
-const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org', {
+const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-prod-techbd-org', {
     env: {
         account,
         region
     }
 });
-new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
+new SynSftpTBD(app, 'synthetic-sftp-prod-techbd-org', {
     env: {
         account,
         region
@@ -25,7 +25,7 @@ new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
     vpc: SynTBDCluster.vpc,
     cluster: SynTBDCluster.cluster
 });
-new SynFhirApiTBD(app, 'synthetic-fhir-api-techbd-org', {
+new SynFhirApiTBD(app, 'synthetic-fhir-api-prod-techbd-org', {
     env: {
         account,
         region
