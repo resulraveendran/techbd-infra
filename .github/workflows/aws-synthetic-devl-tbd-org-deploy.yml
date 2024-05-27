@@ -1,4 +1,4 @@
-name: synthetic-sftp-qualifiedentity-org deployment
+name: synthetic-devl-techbd-org deployment
 
 on:
   push:
@@ -32,6 +32,7 @@ jobs:
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.qualifiedentity.org/containers
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.techbd.org/containers
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.stage.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.stage.techbd.org/containers
           
       - name: install/configure cdk
         run: |
