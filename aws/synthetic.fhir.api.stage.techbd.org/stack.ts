@@ -89,6 +89,9 @@ export class SynFhirApiStageTBD extends cdk.Stack {
                         enableLogging: true,
                         containerPort: 8080,
                         taskRole: fhirTaskRole,
+                        environment: {
+                            "JAVA_TOOL_OPTIONS": "-XX:InitialHeapSize=1g -XX:MaxHeapSize=3g"
+                        }
                     },
                     publicLoadBalancer: true,
                     domainName: "synthetic.fhir.api.stage.techbd.org",
