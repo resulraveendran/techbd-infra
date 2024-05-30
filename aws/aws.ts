@@ -62,7 +62,7 @@ new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
     zone: SynQECluster.zone
 });
 
-stage.techbd.org
+// stage.techbd.org
 const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-stage-techbd-org', {
     env: {
         account,
