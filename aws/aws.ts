@@ -11,13 +11,13 @@ const region = "us-east-1";
 const account= "339712786701";
 
 // techbd.org
-const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-prod-techbd-org', {
+const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org', {
     env: {
         account,
         region
     }
 });
-new SynSftpTBD(app, 'synthetic-sftp-prod-techbd-org', {
+new SynSftpTBD(app, 'synthetic-sftp-techbd-org', {
     env: {
         account,
         region
@@ -25,7 +25,7 @@ new SynSftpTBD(app, 'synthetic-sftp-prod-techbd-org', {
     vpc: SynTBDCluster.vpc,
     cluster: SynTBDCluster.cluster
 });
-new SynFhirApiTBD(app, 'synthetic-fhir-api-prod-techbd-org', {
+new SynFhirApiTBD(app, 'synthetic-fhir-api-techbd-org', {
     env: {
         account,
         region
@@ -63,19 +63,19 @@ new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
 });
 
 // stage.techbd.org
-const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-stage-techbd-org', {
-    env: {
-        account,
-        region
-    }
-});
-new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org', {
-    env: {
-        account,
-        region
-    },
-    vpc: SynStageTBDCluster.vpc,
-    cluster: SynStageTBDCluster.cluster,
-    cert: SynStageTBDCluster.certificate,
-    zone: SynStageTBDCluster.zone
-});
+//const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-stage-techbd-org', {
+//    env: {
+//        account,
+//        region
+//    }
+//});
+//new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org', {
+//    env: {
+//        account,
+//        region
+//    },
+//    vpc: SynStageTBDCluster.vpc,
+//    cluster: SynStageTBDCluster.cluster,
+//    cert: SynStageTBDCluster.certificate,
+//    zone: SynStageTBDCluster.zone
+//});
