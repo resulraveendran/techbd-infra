@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'aws/*stage.techbd.org/**'
+      - 'aws/*.stage.techbd.org/**'
 
 env:
   AWS_REGION: "us-east-1"
