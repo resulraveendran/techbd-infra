@@ -63,19 +63,19 @@ new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
 });
 
 // stage.techbd.org
-//const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-stage-techbd-org', {
-//    env: {
-//        account,
-//        region
-//    }
-//});
-//new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org', {
-//    env: {
-//        account,
-//        region
-//    },
-//    vpc: SynStageTBDCluster.vpc,
-//    cluster: SynStageTBDCluster.cluster,
-//    cert: SynStageTBDCluster.certificate,
-//    zone: SynStageTBDCluster.zone
-//});
+const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org-stage', {
+   env: {
+       account,
+       region
+   }
+});
+new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org-stage', {
+   env: {
+       account,
+       region
+   },
+   vpc: SynStageTBDCluster.vpc,
+   cluster: SynStageTBDCluster.cluster,
+   cert: SynStageTBDCluster.certificate,
+   zone: SynStageTBDCluster.zone
+});
