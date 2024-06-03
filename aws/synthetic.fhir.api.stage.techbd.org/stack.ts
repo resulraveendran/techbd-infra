@@ -39,6 +39,7 @@ export class SynFhirApiStageTBD extends cdk.Stack {
             TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS: envConfig.TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS || "",
             TECH_BD_PERSIST_JDBC_USERNAME: envConfig.TECH_BD_PERSIST_JDBC_USERNAME || "",
             TECH_BD_PERSIST_JDBC_PASSWORD: envConfig.TECH_BD_PERSIST_JDBC_PASSWORD || "",
+            SPRING_PROFILES_ACTIVE: envConfig.SPRING_PROFILES_ACTIVE || "",
         }
         console.log(`fhir tbd stage containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
         // create a role for fhir tasks to access the EFS filesystem

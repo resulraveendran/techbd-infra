@@ -42,9 +42,9 @@ jobs:
       - name: Update fhir environment file
         run: |
           cd aws
-          sed -i 's/TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS=.*/TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS=${{ secrets.TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS }}/g' synthetic.fhir.api.stage.techbd.org/.env
-          sed -i 's/TECH_BD_PERSIST_JDBC_USERNAME=.*/TECH_BD_PERSIST_JDBC_USERNAME=${{ secrets.TECH_BD_PERSIST_JDBC_USERNAME }}/g' synthetic.fhir.api.stage.techbd.org/.env
-          sed -i 's/TECH_BD_PERSIST_JDBC_PASSWORD=.*/TECH_BD_PERSIST_JDBC_PASSWORD=${{ secrets.TECH_BD_PERSIST_JDBC_PASSWORD }}/g' synthetic.fhir.api.stage.techbd.org/.env
+          sed -i 's/TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS=.*/TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS=${{ secrets.STAGE_TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS }}/g' synthetic.fhir.api.stage.techbd.org/.env
+          sed -i 's/TECH_BD_PERSIST_JDBC_USERNAME=.*/TECH_BD_PERSIST_JDBC_USERNAME=${{ secrets.STAGE_TECH_BD_PERSIST_JDBC_USERNAME }}/g' synthetic.fhir.api.stage.techbd.org/.env
+          sed -i 's/TECH_BD_PERSIST_JDBC_PASSWORD=.*/TECH_BD_PERSIST_JDBC_PASSWORD=${{ secrets.STAGE_TECH_BD_PERSIST_JDBC_PASSWORD }}/g' synthetic.fhir.api.stage.techbd.org/.env
 
       - name: deploy infrastructure
         run: |
