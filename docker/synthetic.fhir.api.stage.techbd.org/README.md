@@ -33,7 +33,7 @@ git clone https://github.com/tech-by-design/polyglot-prime.git
 Then, navigate to the Java project folder:
 
 ```
-cd polyglot-prime/fhir
+cd polyglot-prime/hub-prime
 ```
 
 ## Running the Project

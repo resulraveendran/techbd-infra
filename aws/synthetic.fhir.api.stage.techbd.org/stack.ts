@@ -69,7 +69,7 @@ export class SynFhirApiStageTBD extends cdk.Stack {
             this,
             "fhirImage",
             {
-                directory: "./synthetic.fhir.api.stage.techbd.org/containers/fhir/", // Adjust this to the path of your Docker context
+                directory: "./synthetic.fhir.api.stage.techbd.org/containers/hub-prime/", // Adjust this to the path of your Docker context
                 file: "Dockerfile", // Specify the Dockerfile name
                 buildArgs: containerBuildArgs,
                 platform: ecrAssets.Platform.LINUX_AMD64,
