@@ -36,9 +36,9 @@ export class SynFhirApiStageTBD extends cdk.Stack {
             TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
             SEMAPHORE: envConfig.SEMAPHORE || "",
-            TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS: envConfig.TECH_BD_PERSIST_JDBC_URL_WITHOUT_CREDENTIALS || "",
-            TECH_BD_PERSIST_JDBC_USERNAME: envConfig.TECH_BD_PERSIST_JDBC_USERNAME || "",
-            TECH_BD_PERSIST_JDBC_PASSWORD: envConfig.TECH_BD_PERSIST_JDBC_PASSWORD || "",
+            TECHBD_UDI_DS_PRIME_JDBC_URL: envConfig.TECHBD_UDI_DS_PRIME_JDBC_URL || "",
+            TECHBD_UDI_DS_PRIME_JDBC_USERNAME: envConfig.TECHBD_UDI_DS_PRIME_JDBC_USERNAME || "",
+            TECHBD_UDI_DS_PRIME_JDBC_PASSWORD: envConfig.TECHBD_UDI_DS_PRIME_JDBC_PASSWORD || "",
             SPRING_PROFILES_ACTIVE: envConfig.SPRING_PROFILES_ACTIVE || "",
         }
         console.log(`fhir tbd stage containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
