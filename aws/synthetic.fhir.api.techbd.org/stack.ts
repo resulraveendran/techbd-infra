@@ -36,8 +36,12 @@ export class SynFhirApiTBD extends cdk.Stack {
             TAG: envConfig.TAG || "",
             DATE: new Date().toISOString(),
             SEMAPHORE: envConfig.SEMAPHORE || "",
+            TECHBD_UDI_DS_PRIME_JDBC_URL: envConfig.TECHBD_UDI_DS_PRIME_JDBC_URL || "",
+            TECHBD_UDI_DS_PRIME_JDBC_USERNAME: envConfig.TECHBD_UDI_DS_PRIME_JDBC_USERNAME || "",
+            TECHBD_UDI_DS_PRIME_JDBC_PASSWORD: envConfig.TECHBD_UDI_DS_PRIME_JDBC_PASSWORD || "",
+            SPRING_PROFILES_ACTIVE: envConfig.SPRING_PROFILES_ACTIVE || "",
         }
-        console.log(`fhir tbd containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
+        console.log(`fhir tbd prod containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
         // create a role for fhir tasks to access the EFS filesystem
         const fhirTaskRole = new iam.Role(this, "fhirTaskRole", {
             assumedBy: new iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
@@ -65,7 +69,7 @@ export class SynFhirApiTBD extends cdk.Stack {
             this,
             "fhirImage",
             {
-                directory: "./synthetic.fhir.api.techbd.org/containers/fhir/", // Adjust this to the path of your Docker context
+                directory: "./synthetic.fhir.api.techbd.org/containers/hub-prime/", // Adjust this to the path of your Docker context
                 file: "Dockerfile", // Specify the Dockerfile name
                 buildArgs: containerBuildArgs,
                 platform: ecrAssets.Platform.LINUX_AMD64,

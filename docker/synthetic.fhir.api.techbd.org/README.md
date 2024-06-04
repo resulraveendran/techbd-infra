@@ -30,13 +30,13 @@ To clone this repository, navigate to the folder where you want to store the
 project and run:
 
 ```
-git clone https://github.com/qe-collaborative-services/1115-hub.git
+git clone https://github.com/tech-by-design/polyglot-prime.git
 ```
 
 Then, navigate to the Java project folder:
 
 ```
-cd 1115-hub/src/service/fhir-server-prime
+cd polyglot-prime/hub-prime
 ```
 
 ## Running the Project

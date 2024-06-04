@@ -14,12 +14,21 @@ RUN mvn --version
 WORKDIR /app
 ARG REPO_URL
 ARG TAG
+ARG TECHBD_UDI_DS_PRIME_JDBC_URL
+ARG TECHBD_UDI_DS_PRIME_JDBC_USERNAME
+ARG TECHBD_UDI_DS_PRIME_JDBC_PASSWORD
+ARG SPRING_PROFILES_ACTIVE
+
+ENV SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+ENV prod_TECHBD_UDI_DS_PRIME_JDBC_URL=${TECHBD_UDI_DS_PRIME_JDBC_URL}
+ENV prod_TECHBD_UDI_DS_PRIME_JDBC_USERNAME=${TECHBD_UDI_DS_PRIME_JDBC_USERNAME}
+ENV prod_TECHBD_UDI_DS_PRIME_JDBC_PASSWORD=${TECHBD_UDI_DS_PRIME_JDBC_PASSWORD}
 RUN git clone --depth 1 --branch ${TAG} ${REPO_URL}
 
 # open the port for the fhir server
 EXPOSE 8080
 
 # start the fhir server
-WORKDIR /app/polyglot-prime/fhir
+WORKDIR /app/polyglot-prime/hub-prime
 
 CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.arguments=--server.port=8080 --server.host=0.0.0.0"]
