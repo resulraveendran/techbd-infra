@@ -42,7 +42,7 @@ jobs:
       - name: Update fhir environment file
         run: |
           cd aws
-          sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_URL=.*/TECHBD_UDI_DS_PRIME_JDBC_URL=${{ secrets.STAGE_TECHBD_UDI_DS_PRIME_JDBC_URL }}/g' synthetic.fhir.api.stage.techbd.org/.env
+          sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_URL=.*/TECHBD_UDI_DS_PRIME_JDBC_URL=${{ vars.STAGE_TECHBD_UDI_DS_PRIME_JDBC_URL }}/g' synthetic.fhir.api.stage.techbd.org/.env
           sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_USERNAME=.*/TECHBD_UDI_DS_PRIME_JDBC_USERNAME=${{ secrets.STAGE_TECHBD_UDI_DS_PRIME_JDBC_USERNAME }}/g' synthetic.fhir.api.stage.techbd.org/.env
           sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_PASSWORD=.*/TECHBD_UDI_DS_PRIME_JDBC_PASSWORD=${{ secrets.STAGE_TECHBD_UDI_DS_PRIME_JDBC_PASSWORD }}/g' synthetic.fhir.api.stage.techbd.org/.env
 
