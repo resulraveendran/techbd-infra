@@ -5,7 +5,6 @@ on:
     branches:
       - main
     paths:
-      - 'aws/synthetic.sftp.techbd.org/**'
       - 'aws/synthetic.fhir.api.techbd.org/**'
 
 env:
@@ -77,7 +76,8 @@ jobs:
           cd aws
           npm cache clean --force
           npm install --cache=false
-          cdk deploy *-techbd-org --outputs-file output.json --require-approval never
+          # cdk deploy *synthetic-shared-techbd-org --outputs-file output.json --require-approval never; TODO: Needed for full stack deployment
+          cdk deploy *-api-techbd-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact
         uses: actions/upload-artifact@v3
