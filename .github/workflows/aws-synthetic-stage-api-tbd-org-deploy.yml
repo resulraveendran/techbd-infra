@@ -1,4 +1,4 @@
-name: synthetic-stage-techbd-org deployment
+name: synthetic-stage-api-techbd-org deployment
 
 on:
   push:
