@@ -15,7 +15,7 @@ RUN curl -fsSL https://deno.land/x/install/install.sh | DENO_VERSION=$DENO_VERSI
 ENV PATH="/root/.deno/bin:$PATH"
 
 # Install and setup DuckDB
-RUN wget -qO- https://github.com/duckdb/duckdb/releases/download/v0.10.2/duckdb_cli-linux-amd64.zip > duckdb.zip && \
+RUN wget -qO- https://github.com/duckdb/duckdb/releases/download/v1.0.0/duckdb_cli-linux-amd64.zip > duckdb.zip && \
     unzip duckdb.zip -d /usr/local/bin/ && \
     chmod +x /usr/local/bin/duckdb && \
     rm duckdb.zip
