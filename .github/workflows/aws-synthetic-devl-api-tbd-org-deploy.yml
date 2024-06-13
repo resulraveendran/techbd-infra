@@ -1,0 +1,89 @@
+name: synthetic-devl-api-techbd-org deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'aws/synthetic.fhir.api.qualifiedentity.org/**'
+
+env:
+  AWS_REGION: "us-east-1"
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::339712786701:role/AdminAccess
+          role-session-name: GithubActions
+          aws-region: ${{env.AWS_REGION}}
+          audience: sts.amazonaws.com.
+          
+      - name: Create required symbolic links
+        run: |
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.sftp.qualifiedentity.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.qualifiedentity.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.qualifiedentity.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
+          sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.stage.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.stage.techbd.org/containers
+          
+      - name: install/configure cdk
+        run: |
+          npm cache clean --force
+          npm install -g aws-cdk --cache=false 
+
+      - name: Update fhir environment file
+        run: |
+          cd aws
+          sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_URL=.*/TECHBD_UDI_DS_PRIME_JDBC_URL=${{ vars.DEVL_TECHBD_UDI_DS_PRIME_JDBC_URL }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_USERNAME=.*/TECHBD_UDI_DS_PRIME_JDBC_USERNAME=${{ secrets.DEVL_TECHBD_UDI_DS_PRIME_JDBC_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/TECHBD_UDI_DS_PRIME_JDBC_PASSWORD=.*/TECHBD_UDI_DS_PRIME_JDBC_PASSWORD=${{ secrets.DEVL_TECHBD_UDI_DS_PRIME_JDBC_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_TENANTID=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_TENANTID=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_TENANTID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_SERVER=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_SERVER=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_SERVER }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PORT=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PORT=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PORT }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_USERNAME=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_USERNAME=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PASSWORD=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PASSWORD=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_0_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_TENANTID=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_TENANTID=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_TENANTID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_SERVER=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_SERVER=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_SERVER }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PORT=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PORT=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PORT }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_USERNAME=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_USERNAME=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PASSWORD=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PASSWORD=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_1_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_TENANTID=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_TENANTID=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_TENANTID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_SERVER=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_SERVER=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_SERVER }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PORT=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PORT=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PORT }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_USERNAME=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_USERNAME=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PASSWORD=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PASSWORD=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_2_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_TENANTID=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_TENANTID=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_TENANTID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_SERVER=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_SERVER=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_SERVER }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PORT=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PORT=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PORT }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_USERNAME=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_USERNAME=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PASSWORD=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PASSWORD=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_3_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_TENANTID=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_TENANTID=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_TENANTID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_SERVER=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_SERVER=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_SERVER }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PORT=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PORT=${{ vars.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PORT }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_USERNAME=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_USERNAME=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_USERNAME }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PASSWORD=.*/ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PASSWORD=${{ secrets.DEVL_ORG_TECHBD_ORCHESTRATE_SFTP_ACCOUNT_ORCHCTLTS_4_PASSWORD }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_ID=.*/SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_ID=${{ secrets.DEVL_SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_ID }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+          sed -i 's/SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_SECRET=.*/SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_SECRET=${{ secrets.DEVL_SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_SECRET }}/g' synthetic.fhir.api.qualifiedentity.org/.env
+      - name: deploy infrastructure
+        run: |
+          cd aws
+          npm cache clean --force
+          npm install --cache=false
+          # cdk deploy *-qualifiedentity-org --outputs-file output.json --require-approval never; TODO: Needed for full stack deployment
+          cdk deploy *-api-qualifiedentity-org --outputs-file output.json --require-approval never
+
+      - name: Upload cdk output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cdk-output-artifact
+          path: ./output.json
+          retention-days: 14
+
