@@ -1,0 +1,36 @@
+users:
+  - gitHubId: razakpm
+    name: Abdul Razak PM
+    tenantId: tenant123
+    roles:
+      - ADMIN
+      - USER
+  - gitHubId: rinshadka
+    name: Rinshad KA
+    tenantId: tenant456
+    roles:
+      - USER
+  - gitHubId: vishnu3270
+    name: Vishnu K
+    tenantId: tenant789
+    roles:
+      - DEVELOPER
+      - USER
+  - gitHubId: anoopvarma
+    name: Anoop varma
+    tenantId: tenant123
+    roles:
+      - DEVELOPER
+      - ADMIN
+  - gitHubId: Rinshak95
+    name: Rinsha
+    tenantId: tenant123
+    roles:
+      - DEVELOPER
+      - USER
+  - gitHubId: SreevidyaAravind1989
+    name: Sreevidya Aravind
+    tenantId: tenant123
+    roles:
+      - DEVELOPER
+      - USER  
