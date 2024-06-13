@@ -44,7 +44,7 @@ jobs:
           cd aws
           npm cache clean --force
           npm install --cache=false
-	  # cdk deploy *-qualifiedentity-org --outputs-file output.json --require-approval never; TODO: Needed for full stack deployment
+          # cdk deploy *-qualifiedentity-org --outputs-file output.json --require-approval never; TODO: Needed for full stack deployment
           cdk deploy *-sftp-qualifiedentity-org --outputs-file output.json --require-approval never
 
       - name: Upload cdk output artifact
