@@ -1,36 +1,67 @@
 users:
+  - gitHubId: reeager
+    name: Rachel Eager
+    tenantId: nyec
+    roles:     
+      - USER
+  - gitHubId: ghoward9
+    name: Gena Howard
+    tenantId: readycomputing
+    roles:
+      - USER
+  - gitHubId: n-kes
+    name: Nick VanDunye
+    tenantId: healthix
+    roles:
+      - USER
+  - gitHubId: DrewMcN
+    name: Drew McNichol
+    tenantId: nyehealth
+    roles:
+      - USER
+  - gitHubId: raphaelvp
+    name: Raphael V P
+    tenantId: netspective
+    roles:
+      - USER
+  - gitHubId: sha
+    name: Shahid Shah
+    tenantId: netspective
+    roles:
+      - ADMIN
+      - USER
   - gitHubId: razakpm
     name: Abdul Razak PM
-    tenantId: tenant123
+    tenantId: netspective
     roles:
       - ADMIN
       - USER
   - gitHubId: rinshadka
     name: Rinshad KA
-    tenantId: tenant456
+    tenantId: netspective
     roles:
       - USER
   - gitHubId: vishnu3270
     name: Vishnu K
-    tenantId: tenant789
+    tenantId: netspective
     roles:
       - DEVELOPER
       - USER
   - gitHubId: anoopvarma
     name: Anoop varma
-    tenantId: tenant123
+    tenantId: netspective
     roles:
       - DEVELOPER
       - ADMIN
   - gitHubId: Rinshak95
     name: Rinsha
-    tenantId: tenant123
+    tenantId: netspective
     roles:
       - DEVELOPER
       - USER
   - gitHubId: SreevidyaAravind1989
     name: Sreevidya Aravind
-    tenantId: tenant123
+    tenantId: netspective
     roles:
       - DEVELOPER
       - USER  
