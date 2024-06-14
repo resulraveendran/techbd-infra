@@ -24,7 +24,7 @@ users:
     tenantId: netspective
     roles:
       - USER
-  - gitHubId: sha
+  - gitHubId: shah
     name: Shahid Shah
     tenantId: netspective
     roles:
