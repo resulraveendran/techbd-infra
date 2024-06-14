@@ -10,8 +10,8 @@ users:
     roles:
       - USER
   - gitHubId: n-kes
-    name: Nick VanDunye
-    tenantId: healthix
+    name: Nicholas Kesler
+    tenantId: readycomputing
     roles:
       - USER
   - gitHubId: DrewMcN
@@ -52,7 +52,7 @@ users:
     tenantId: netspective
     roles:
       - DEVELOPER
-      - ADMIN
+      - USER
   - gitHubId: Rinshak95
     name: Rinsha
     tenantId: netspective
@@ -65,3 +65,21 @@ users:
     roles:
       - DEVELOPER
       - USER  
+  - gitHubId: alan-francis
+    name: Alan Francis
+    tenantId: netspective
+    roles:
+      - DEVELOPER
+      - USER 
+  - gitHubId: vinodaravind01
+    name: Vinod Aravind
+    tenantId: netspective
+    roles:
+      - DEVELOPER
+      - USER 
+  - gitHubId: ratheesh-kr
+    name: Ratheesh KR
+    tenantId: netspective
+    roles:
+      - DEVELOPER
+      - USER 
