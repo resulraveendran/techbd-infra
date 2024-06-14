@@ -47,7 +47,7 @@ users:
     roles:
       - DEVELOPER
       - USER
-  - gitHubId: anoopvarma
+  - gitHubId: anoopvarma-2000-p
     name: Anoop varma
     tenantId: netspective
     roles:
