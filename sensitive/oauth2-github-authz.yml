@@ -4,6 +4,7 @@ users:
     tenantId: nyec
     roles:     
       - USER
+      - ADMIN
   - gitHubId: ghoward9
     name: Gena Howard
     tenantId: readycomputing
@@ -21,65 +22,65 @@ users:
       - USER
   - gitHubId: raphaelvp
     name: Raphael V P
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - USER
   - gitHubId: shah
     name: Shahid Shah
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - ADMIN
       - USER
   - gitHubId: razakpm
     name: Abdul Razak PM
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - ADMIN
       - USER
   - gitHubId: rinshadka
     name: Rinshad KA
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - USER
   - gitHubId: vishnu3270
     name: Vishnu K
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER
   - gitHubId: anoopvarma-2000-p
     name: Anoop varma
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER
   - gitHubId: Rinshak95
     name: Rinsha
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER
   - gitHubId: SreevidyaAravind1989
     name: Sreevidya Aravind
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER  
   - gitHubId: alan-francis
     name: Alan Francis
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER 
   - gitHubId: vinodaravind01
     name: Vinod Aravind
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER 
   - gitHubId: ratheesh-kr
     name: Ratheesh KR
-    tenantId: netspective
+    tenantId: TechBD
     roles:
       - DEVELOPER
       - USER 
