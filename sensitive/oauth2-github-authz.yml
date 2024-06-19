@@ -84,3 +84,8 @@ users:
     roles:
       - DEVELOPER
       - USER 
+  - gitHubId: roshnikesavan2022
+    name: Roshni
+    tenantId: TechBD
+    roles:
+      - USER
