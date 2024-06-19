@@ -40,6 +40,11 @@ export class SynSftpQE extends cdk.Stack {
         FHIR_ENDPOINT: envConfig.FHIR_ENDPOINT || "",
         DATE: new Date().toISOString(),
         SEMAPHORE: envConfig.SEMAPHORE || "",
+        POSTGRES_DB: envConfig.POSTGRES_DB || "",
+	POSTGRES_USER: envConfig.POSTGRES_USER || "",
+	POSTGRES_HOST: envConfig.POSTGRES_HOST || "",
+	POSTGRES_PASSWORD: envConfig.POSTGRES_PASSWORD || "",
+	POSTGRES_PORT: envConfig.POSTGRES_PORT || "",
     }
     console.log(`sftp qe containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
     // Create the EFS filesystem

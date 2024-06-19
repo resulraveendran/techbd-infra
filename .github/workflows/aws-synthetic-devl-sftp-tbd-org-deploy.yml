@@ -34,6 +34,15 @@ jobs:
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.sftp.techbd.org/ ${{ github.workspace }}/aws/synthetic.sftp.techbd.org/containers
           sudo ln -sf ${{ github.workspace }}/docker/synthetic.fhir.api.stage.techbd.org/ ${{ github.workspace }}/aws/synthetic.fhir.api.stage.techbd.org/containers
           
+      - name: Update sftp environment file
+        run: |
+          cd aws
+          sed -i 's/POSTGRES_DB=.*/POSTGRES_DB=${{ vars.DEVL_TECHBD_UDI_DS_PRIME_DATABASE }}/g' synthetic.sftp.qualifiedentity.org/.env
+          sed -i 's/POSTGRES_PORT=.*/POSTGRES_PORT=${{ vars.DEVL_TECHBD_UDI_DS_PRIME_PORT }}/g' synthetic.sftp.qualifiedentity.org/.env
+          sed -i 's/POSTGRES_HOST=.*/POSTGRES_HOST=${{ vars.DEVL_TECHBD_UDI_DS_PRIME_HOST }}/g' synthetic.sftp.qualifiedentity.org/.env
+          sed -i 's/POSTGRES_USER=.*/POSTGRES_USER=${{ secrets.DEVL_TECHBD_UDI_DS_PRIME_JDBC_USERNAME }}/g' synthetic.sftp.qualifiedentity.org/.env
+          sed -i 's/POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=${{ secrets.DEVL_TECHBD_UDI_DS_PRIME_JDBC_PASSWORD }}/g' synthetic.sftp.qualifiedentity.org/.env
+          
       - name: install/configure cdk
         run: |
           npm cache clean --force
