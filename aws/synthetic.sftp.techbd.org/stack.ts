@@ -9,6 +9,7 @@ import { ManagedPolicy, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 import * as dotenv from "dotenv";
 import path = require("path");
+import fs = require("fs");
 
 
 export interface SynSftpTBDProps extends cdk.StackProps { 
@@ -24,17 +25,26 @@ export class SynSftpTBD extends cdk.Stack {
     // Shared Services
     //
     //
-    // Load environment variables from .env file
-    dotenv.config({ path: path.resolve(__dirname,".env") });
+    const envPath = path.resolve(__dirname, ".env");
+    console.log(`Loading environment variables from: ${envPath}`);
+    dotenv.config({ path: envPath });
+    // Read and parse the .env file
+    const envConfig = dotenv.parse(fs.readFileSync(envPath));
+        
     const containerBuildArgs = {
-      DEPLOYMENT_DOMAIN: `${process.env.DEPLOYMENT_DOMAIN}`,
-      REPO_URL: `${process.env.REPO_URL}`,
-      TAG: `${process.env.TAG}`,
-      QE_NAMES: `${process.env.QE_NAMES}`,
-      DATE: new Date().toISOString(),
-      ORCHCTL_CRON: `${process.env.ORCHCTL_CRON}`,
-      FHIR_ENDPOINT: `${process.env.FHIR_ENDPOINT}`,
-      SEMAPHORE: `${process.env.SEMAPHORE}`,
+        DEPLOYMENT_DOMAIN: envConfig.DEPLOYMENT_DOMAIN || "",
+        REPO_URL: envConfig.REPO_URL || "",
+        TAG: envConfig.TAG || "",
+        QE_NAMES: envConfig.QE_NAMES || "",
+        ORCHCTL_CRON: envConfig.ORCHCTL_CRON || "",
+        FHIR_ENDPOINT: envConfig.FHIR_ENDPOINT || "",
+        DATE: new Date().toISOString(),
+        SEMAPHORE: envConfig.SEMAPHORE || "",
+        POSTGRES_DB: envConfig.POSTGRES_DB || "",
+        POSTGRES_USER: envConfig.POSTGRES_USER || "",
+        POSTGRES_HOST: envConfig.POSTGRES_HOST || "",
+        POSTGRES_PASSWORD: envConfig.POSTGRES_PASSWORD || "",
+        POSTGRES_PORT: envConfig.POSTGRES_PORT || "",
     }
     console.log(`sftp tbd containerBuildArgs: ${JSON.stringify(containerBuildArgs)}`)
     // Create the EFS filesystem
