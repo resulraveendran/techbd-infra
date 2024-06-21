@@ -24,6 +24,12 @@ RUN wget -qO- https://github.com/duckdb/duckdb/releases/download/v1.0.0/duckdb_c
 WORKDIR /app
 ARG REPO_URL
 ARG TAG
+ARG POSTGRES_DB
+ARG POSTGRES_USER
+ARG POSTGRES_HOST
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_PORT
+
 RUN git clone --depth 1 --branch $TAG $REPO_URL
 
 # Install and check Deno dependencies
@@ -45,6 +51,11 @@ ENV DATE=$DATE
 ENV INTERVAL=$INTERVAL
 ENV ORCHCTL_CRON=$ORCHCTL_CRON
 ENV FHIR_ENDPOINT=$FHIR_ENDPOINT
+ENV POSTGRES_DB=${POSTGRES_DB}
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_HOST=${POSTGRES_HOST}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+ENV POSTGRES_PORT=${POSTGRES_PORT}
 
 # Copy the health check script
 COPY health-check.sh /health-check.sh
@@ -69,6 +80,9 @@ RUN touch $crontab_file
 
 # add path to crontab
 RUN echo "PATH=/usr/local/bin:/usr/bin:/bin" >> $crontab_file
+
+# add .env file
+RUN echo "POSTGRES_DB=${POSTGRES_DB}\nPOSTGRES_USER=${POSTGRES_USER}\nPOSTGRES_HOST=${POSTGRES_HOST}\nPOSTGRES_PASSWORD=${POSTGRES_PASSWORD}\nPOSTGRES_PORT=${POSTGRES_PORT}" > /app/1115-hub/.env
 
 RUN /bin/bash -c "\
     IFS=' ' read -r -a qe_names_array <<< \"$QE_NAMES\"; \
