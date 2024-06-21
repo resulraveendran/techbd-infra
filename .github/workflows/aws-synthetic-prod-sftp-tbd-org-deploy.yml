@@ -40,8 +40,8 @@ jobs:
           sed -i 's/POSTGRES_DB=.*/POSTGRES_DB=${{ vars.PROD_TECHBD_UDI_DS_PRIME_DATABASE }}/g' synthetic.sftp.techbd.org/.env
           sed -i 's/POSTGRES_PORT=.*/POSTGRES_PORT=${{ vars.PROD_TECHBD_UDI_DS_PRIME_PORT }}/g' synthetic.sftp.techbd.org/.env
           sed -i 's/POSTGRES_HOST=.*/POSTGRES_HOST=${{ vars.PROD_TECHBD_UDI_DS_PRIME_HOST }}/g' synthetic.sftp.techbd.org/.env
-          sed -i 's/POSTGRES_USER=.*/POSTGRES_USER=${{ secrets.PROD_TECHBD_UDI_DS_PRIME_JDBC_USERNAME }}/g' synthetic.sftp.techbd.org/.env
-          sed -i 's/POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=${{ secrets.PROD_TECHBD_UDI_DS_PRIME_JDBC_PASSWORD }}/g' synthetic.sftp.techbd.org/.env
+          sed -i 's/POSTGRES_USER=.*/POSTGRES_USER=${{ secrets.PROD_TECHBD_UDI_DS_PRIME_USERNAME }}/g' synthetic.sftp.techbd.org/.env
+          sed -i 's/POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=${{ secrets.PROD_TECHBD_UDI_DS_PRIME_PASSWORD }}/g' synthetic.sftp.techbd.org/.env
 
       - name: install/configure cdk
         run: |
