@@ -1,0 +1,160 @@
+users:
+  - gitHubId: reeager
+    name: Rachel Eager
+    tenantId: nyec
+    resources:
+      sudomain1.techbd.org:
+        roles:
+          - ADMIN
+          - USER
+      sudomain2.techbd.org:
+        roles:
+          - ADMIN
+          - USER
+  - gitHubId: ghoward9
+    name: Gena Howard
+    tenantId: readycomputing
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: n-kes
+    name: Nicholas Kesler
+    tenantId: readycomputing
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: DrewMcN
+    name: Drew McNichol
+    tenantId: nyehealth
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: raphaelvp
+    name: Raphael V P
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: shah
+    name: Shahid Shah
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: razakpm
+    name: Abdul Razak PM
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: rinshadka
+    name: Rinshad KA
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: vishnu3270
+    name: Vishnu K
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: anoopvarma-2000-p
+    name: Anoop varma
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: Rinshak95
+    name: Rinsha
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain3.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: SreevidyaAravind1989
+    name: Sreevidya Aravind
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: alan-francis
+    name: Alan Francis
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER      
+  - gitHubId: vinodaravind01
+    name: Vinod Aravind
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain3.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: ratheesh-kr
+    name: Ratheesh KR
+    tenantId: TechBD
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain4.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: roshnikesavan2022
+    name: Roshni
+    tenantId: TechBD
+    resources:
+      sudomain3.techbd.org:
+        roles:          
+          - USER
+      sudomain4.techbd.org:
+        roles:          
+          - USER
