@@ -4,14 +4,16 @@ import { SynSftpQE } from './synthetic.sftp.qualifiedentity.org/stack';
 import { SynFhirApiQE } from './synthetic.fhir.api.qualifiedentity.org/stack';
 import { SynFhirApiTBD } from './synthetic.fhir.api.techbd.org/stack';
 import { SynFhirApiStageTBD } from './synthetic.fhir.api.stage.techbd.org/stack';
-import { EcsCluster } from './common/ecs-cluster';
+import { EcsDevlCluster } from './common/ecs-devl-cluster';
+import { EcsStageCluster } from './common/ecs-stage-cluster';
+import { EcsProdCluster } from './common/ecs-prod-cluster';
 
 const app = new cdk.App();
 const region = "us-east-1";
 const account= "339712786701";
 
 // techbd.org
-const SynTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org', {
+const SynTBDCluster = new EcsProdCluster(app, 'synthetic-shared-techbd-org', {
     env: {
         account,
         region
@@ -37,7 +39,7 @@ new SynFhirApiTBD(app, 'synthetic-fhir-api-techbd-org', {
 });
 
 // devl.techbd.org
-const SynQECluster = new EcsCluster(app, 'synthetic-shared-qualifiedentity-org', {
+const SynQECluster = new EcsDevlCluster(app, 'synthetic-shared-qualifiedentity-org', {
     env: {
         account,
         region
@@ -63,7 +65,7 @@ new SynFhirApiQE(app, 'synthetic-fhir-api-qualifiedentity-org', {
 });
 
 // stage.techbd.org
-const SynStageTBDCluster = new EcsCluster(app, 'synthetic-shared-techbd-org-stage', {
+const SynStageTBDCluster = new EcsStageCluster(app, 'synthetic-shared-techbd-org-stage', {
    env: {
        account,
        region
