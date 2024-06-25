@@ -21,6 +21,26 @@ users:
       sudomain2.techbd.org:
         roles:          
           - USER
+  - gitHubId: NickVanDuyne
+    name: Nick VanDuyne
+    tenantId: Healthix
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
+  - gitHubId: skairawala
+    name: Sheetal Kairawala
+    tenantId: Healthix
+    resources:
+      sudomain1.techbd.org:
+        roles:          
+          - USER
+      sudomain2.techbd.org:
+        roles:          
+          - USER
   - gitHubId: n-kes
     name: Nicholas Kesler
     tenantId: readycomputing

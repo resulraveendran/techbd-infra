@@ -10,6 +10,16 @@ users:
     tenantId: readycomputing
     roles:
       - USER
+  - gitHubId: NickVanDuyne
+    name: Nick VanDuyne
+    tenantId: Healthix
+    roles:          
+      - USER
+  - gitHubId: skairawala
+    name: Sheetal Kairawala
+    tenantId: Healthix
+    roles:          
+      - USER
   - gitHubId: n-kes
     name: Nicholas Kesler
     tenantId: readycomputing
