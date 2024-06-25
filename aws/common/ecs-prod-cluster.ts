@@ -47,7 +47,7 @@ export class EcsProdCluster extends cdk.Stack {
         this.certificate = new Certificate(this, "domainCert", {
             domainName: "techbd.org",
             subjectAlternativeNames: [
-              `synthetic.fhir.api.devl.techbd.org`,
+              `synthetic.fhir.api.techbd.org`,
             ],
             validation: CertificateValidation.fromDns(),
           });
