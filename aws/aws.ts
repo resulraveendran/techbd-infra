@@ -74,7 +74,7 @@ new SynFhirApiStageTBD(app, 'synthetic-fhir-api-stage-techbd-org-stage', {
        account,
        region
    },
-   vpc: SynStageTBDCluster.vpc,
+   vpc: SynTBDCluster.vpc,
    cluster: SynStageTBDCluster.cluster,
    cert: SynStageTBDCluster.certificate,
    zone: SynStageTBDCluster.zone
