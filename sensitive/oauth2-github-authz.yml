@@ -99,3 +99,8 @@ users:
     tenantId: TechBD
     roles:
       - USER
+  - gitHubId: shajukochappu
+    name: Shaju kochappu
+    tenantId: TechBD
+    roles:          
+      - USER

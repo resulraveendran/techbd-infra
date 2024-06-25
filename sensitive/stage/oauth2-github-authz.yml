@@ -178,3 +178,13 @@ users:
       sudomain4.techbd.org:
         roles:          
           - USER
+  - gitHubId: shajukochappu
+    name: Shaju kochappu
+    tenantId: TechBD
+    resources:
+      sudomain3.techbd.org:
+        roles:          
+          - USER
+      sudomain4.techbd.org:
+        roles:          
+          - USER
