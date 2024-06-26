@@ -1,0 +1,60 @@
+name: health-synthetic-techbd-org deployment
+
+on:
+  workflow_dispatch:
+
+env:
+  AWS_REGION: "us-west-1"
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::339712786701:role/AdminAccess
+          role-session-name: GithubActions
+          aws-region: ${{env.AWS_REGION}}
+          audience: sts.amazonaws.com.
+    
+
+      - name: Update sftp environment file
+        run: |
+          cd aws
+          sed -i 's/HOST=.*/HOST=${{ vars.ONEUPTIME_HOST }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/ONEUPTIME_SECRET=.*/ONEUPTIME_SECRET=${{ secrets.ONEUPTIME_SECRET }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/DATABASE_PASSWORD=.*/DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/REDIS_PASSWORD=.*/REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/ENCRYPTION_SECRET=.*/ENCRYPTION_SECRET=${{ secrets.ENCRYPTION_SECRET }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/GLOBAL_PROBE_1_KEY=.*/GLOBAL_PROBE_1_KEY=${{ secrets.GLOBAL_PROBE_1_KEY }}/g' health.synthetic.techbd.org/config.env
+          sed -i 's/GLOBAL_PROBE_2_KEY=.*/GLOBAL_PROBE_2_KEY=${{ secrets.GLOBAL_PROBE_2_KEY }}/g' health.synthetic.techbd.org/config.env
+
+      - name: install/configure cdk
+        env:
+          VPC_ID: ${{ vars.VPC_ID }}
+        run: |
+          npm cache clean --force
+          npm install -g aws-cdk --cache=false 
+
+      - name: deploy infrastructure
+        run: |
+          cd aws
+          npm cache clean --force
+          npm install --cache=false
+          # cdk deploy *synthetic-shared-techbd-org --outputs-file output.json --require-approval never; TODO: Needed for full stack deployment
+          cdk deploy --app "npx ts-node oneuptime-ec2.ts" vpcLookupStack  SmtpUserStack --outputs-file output.json --require-approval never
+          cdk deploy --app "npx ts-node oneuptime-ec2.ts"  OneUptimeEc2InstanceStack --outputs-file output.json --require-approval never
+          
+
+      - name: Upload cdk output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cdk-output-artifact
+          path: ./output.json
+          retention-days: 14
+
