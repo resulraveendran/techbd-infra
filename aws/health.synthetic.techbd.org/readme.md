@@ -9,6 +9,7 @@ Before running this pipeline, ensure you have set the following variables and se
 ### Variables
 
 - **ONEUPTIME_HOST**: The host for OneUptime.
+- **VPC_ID**: The Production vpc id
 
 ### Secrets
 
